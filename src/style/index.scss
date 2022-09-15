@@ -8,11 +8,16 @@
     user-select: none;
     font-family: "webfont";
   }
+
   
   body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    
+  }
+  ul li {
+    list-style: none;
   }
   
   ::-webkit-scrollbar {
