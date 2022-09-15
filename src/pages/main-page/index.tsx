@@ -7,7 +7,11 @@ import DoneIcon from "../../assets/images/done.png";
 import UserIcon from '../../assets/svg/user-line.svg'
 import MoreIcon from '../../assets/svg/more-fill.svg'
 
-import { Button, Space, Input, Breadcrumb } from "antd";
+import { Button, Space, Input, Breadcrumb, Table } from "antd";
+import Icon from "../../components/Bucket/IconFont";
+import { Item } from "../../lib/vdir/types";
+import VFolder from "../../lib/vdir/VFolder";
+import VFile from "../../lib/vdir/VFile";
 import { UploadOutlined } from "@ant-design/icons";
 
 import BackIcon from "../../assets/images/back.png";
@@ -15,9 +19,76 @@ import ReloadIcon from "../../assets/images/reload.png";
 import SearchIcon from "../../assets/images/search.png";
 import GridIcon from "../../assets/images/grid.png";
 import TableIcon from "../../assets/images/table.png";
+import shortid from 'shortid';
 
 
 const MainPage: React.FC = () => {
+    const items: Item[] = [
+        {
+            name: 'name1',
+            webkitRelativePath: '/path',
+            meta: 'meta1',
+            type: 'file',
+            size: 0,
+            lastModified: 0,
+            lastModifiedDate: new Date(),
+            shortId: shortid()
+        },
+        {
+            name: 'name2',
+            webkitRelativePath: '/path',
+            meta: 'meta2',
+            type: 'file',
+            size: 1,
+            lastModified: 0,
+            lastModifiedDate: new Date(),
+            shortId: shortid()
+        },
+    ]
+
+
+    const columns = [
+        {
+            title: "文件名",
+            dataIndex: "name",
+            key: "shortId",
+            ellipsis: true,
+            render(name: string, item: Item) {
+                return (
+                    <div className="file-meta">
+                        <Icon
+                            type={'icon-documents'}
+                            className="file-icon"
+                        />
+                        <div className="file-name">{name}</div>
+                    </div>
+                );
+            }
+        },
+        {
+            title: "大小",
+            dataIndex: "size",
+            key: "size",
+            sorter: (a: Item, b: Item) => a.size - b.size,
+            ellipsis: true,
+            render(size: number) {
+                return "0 Bytes";
+            }
+        },
+        {
+            title: "修改日期",
+            dataIndex: "lastModified",
+            key: "lastModified",
+            ellipsis: true,
+            sorter: (a: Item, b: Item) => a.lastModified - b.lastModified,
+            render(timestamp: number) {
+                return "YYYY年MM月DD日 HH:mm:ss";
+            }
+        }
+    ];
+
+
+
     return (
         <div className="main-page">
             <div className="side-bar">
@@ -87,14 +158,23 @@ const MainPage: React.FC = () => {
                             <img
                                 role="presentation"
                                 className="mode-icon"
-                                src={GridIcon}
+                                src={TableIcon}
                                 alt=""
                             />
                         </Button>
                     </Space>
                 </div>
                 <div className="file-wrapper">
-                    文件区域
+                    <Table
+                        rowKey="shortId"
+                        size="small"
+                        dataSource={items}
+                        childrenColumnName="never"
+                        showSorterTooltip={false}
+                        scroll={{ y: 800 }}
+                        columns={columns}
+                        pagination={false}
+                    />
                 </div>
             </div>
         </div>

@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/shortid": "^0.0.29",
     "antd": "^4.23.1",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.0",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

@@ -180,5 +180,27 @@
                 }
             }
         }
+        .file-wrapper {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .file-meta {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .file-icon {
+                  font-size: 25px;
+                }
+
+                .file-name {
+                  overflow: hidden; //超出的文本隐藏
+                  text-overflow: ellipsis; //溢出用省略号显示
+                  white-space: nowrap; //溢出不换行
+                  margin-left: 10px;
+                }
+              }
+        }
     }
 }
