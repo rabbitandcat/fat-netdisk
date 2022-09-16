@@ -1,0 +1,17 @@
+import React from "react";
+import "./index.scss";
+
+type PropTypes = {
+  title: string;
+  subTitle: string;
+};
+
+const Empty: React.FC<PropTypes> = params => {
+  return (
+    <div className="no-result">
+      <div className="title">{params.title}</div>
+      <div className="sub-title">{params.subTitle}</div>
+    </div>
+  );
+};
+export default Empty;

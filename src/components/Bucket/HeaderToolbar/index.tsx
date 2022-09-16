@@ -11,7 +11,7 @@ import TableIcon from "../../../assets/images/table.png";
 
 type PropTypes = {
     layout: Layout,
-    setLayout: (layout: Layout) => void
+    onChangeLayout: any,
 }
 
 const HeaderTollbar: React.FC<PropTypes> = params => {
@@ -47,21 +47,20 @@ const HeaderTollbar: React.FC<PropTypes> = params => {
                     placeholder="搜索"
                 />
                 {params.layout === Layout.table ? (
-                    <Button size="small">
+                    <Button size="small" onClick={params.onChangeLayout}
+                    >
                         <img
                             role="presentation"
                             className="mode-icon"
-                            onClick={() => {if(params.layout === Layout.table) params.setLayout(Layout.grid)}}
                             src={TableIcon}
                             alt=""
                         />
                     </Button>
                 ) : (
-                    <Button size="small">
+                    <Button size="small" onClick={params.onChangeLayout}>
                         <img
                             role="presentation"
                             className="mode-icon"
-                            onClick={() => {if(params.layout === Layout.grid) params.setLayout(Layout.table)}}
                             src={GridIcon}
                             alt=""
                         />

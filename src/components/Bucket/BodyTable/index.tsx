@@ -7,31 +7,11 @@ import VFile from "../../../lib/vdir/VFile";
 import shortid from 'shortid';
 
 
-const BodyTable: React.FC = () => {
+type PropTypes = {
+    items: Item[],
+}
 
-    const items: Item[] = [
-        {
-            name: '学习视频1',
-            webkitRelativePath: '/path',
-            meta: 'meta1',
-            type: 'file',
-            size: 0,
-            lastModified: 0,
-            lastModifiedDate: new Date(),
-            shortId: shortid()
-        },
-        {
-            name: '学习视频2',
-            webkitRelativePath: '/path',
-            meta: 'meta2',
-            type: 'file',
-            size: 1,
-            lastModified: 0,
-            lastModifiedDate: new Date(),
-            shortId: shortid()
-        },
-    ]
-
+const BodyTable: React.FC<PropTypes> = params => {
 
     const columns = [
         {
@@ -78,7 +58,7 @@ const BodyTable: React.FC = () => {
             <Table
                 rowKey="shortId"
                 size="small"
-                dataSource={items}
+                dataSource={params.items}
                 childrenColumnName="never"
                 showSorterTooltip={false}
                 scroll={{ y: 800 }}

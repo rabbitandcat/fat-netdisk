@@ -6,30 +6,11 @@ import VFile from "../../../lib/vdir/VFile";
 import VFolder from "../../../lib/vdir/VFolder";
 import IconFont from "../../IconFont";
 
-const BodyGrid: React.FC = () => {
+type PropTypes = {
+    items: Item[],
+}
 
-    const items: Item[] = [
-        {
-            name: '学习视频1',
-            webkitRelativePath: '/path',
-            meta: 'meta1',
-            type: 'file',
-            size: 0,
-            lastModified: 0,
-            lastModifiedDate: new Date(),
-            shortId: shortid()
-        },
-        {
-            name: '学习视频2',
-            webkitRelativePath: '/path',
-            meta: 'meta2',
-            type: 'file',
-            size: 1,
-            lastModified: 0,
-            lastModifiedDate: new Date(),
-            shortId: shortid()
-        },
-    ]
+const BodyGrid: React.FC<PropTypes> = params => {
 
     const renderVFile = (item: VFile) => {
         return (
@@ -71,7 +52,7 @@ const BodyGrid: React.FC = () => {
             className="file-wrapper-grid"
             role="presentation"
         >
-            {items.map(renderItem)}
+            {params.items.map(renderItem)}
         </div>
     );
 }
