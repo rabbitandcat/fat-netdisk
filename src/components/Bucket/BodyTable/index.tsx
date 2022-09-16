@@ -74,7 +74,7 @@ const BodyTable: React.FC = () => {
     ];
 
     return (
-        <div className="file-wrapper">
+        <div className="file-wrapper-table">
             <Table
                 rowKey="shortId"
                 size="small"

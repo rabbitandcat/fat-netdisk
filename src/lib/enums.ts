@@ -5,3 +5,9 @@ export enum Page {
     setting,
     services
 }
+
+
+export enum Layout {
+    grid,
+    table
+}

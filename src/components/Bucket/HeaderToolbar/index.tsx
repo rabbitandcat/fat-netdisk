@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Space, Input, Breadcrumb, Table } from "antd";
 
+import { Layout } from '../../../lib/enums';
 import BackIcon from "../../../assets/images/back.png";
 import ReloadIcon from "../../../assets/images/reload.png";
 import SearchIcon from "../../../assets/images/search.png";
@@ -8,7 +9,12 @@ import GridIcon from "../../../assets/images/grid.png";
 import TableIcon from "../../../assets/images/table.png";
 
 
-const HeaderTollbar: React.FC = () => {
+type PropTypes = {
+    layout: Layout,
+    setLayout: (layout: Layout) => void
+}
+
+const HeaderTollbar: React.FC<PropTypes> = params => {
     return (
         <div className="control-btns">
             <Space size="middle" align="center" className="left-wrapper">
@@ -40,14 +46,27 @@ const HeaderTollbar: React.FC = () => {
                     prefix={<img src={SearchIcon} alt="" />}
                     placeholder="搜索"
                 />
-                <Button size="small">
-                    <img
-                        role="presentation"
-                        className="mode-icon"
-                        src={TableIcon}
-                        alt=""
-                    />
-                </Button>
+                {params.layout === Layout.table ? (
+                    <Button size="small">
+                        <img
+                            role="presentation"
+                            className="mode-icon"
+                            onClick={() => {if(params.layout === Layout.table) params.setLayout(Layout.grid)}}
+                            src={TableIcon}
+                            alt=""
+                        />
+                    </Button>
+                ) : (
+                    <Button size="small">
+                        <img
+                            role="presentation"
+                            className="mode-icon"
+                            onClick={() => {if(params.layout === Layout.grid) params.setLayout(Layout.table)}}
+                            src={GridIcon}
+                            alt=""
+                        />
+                    </Button>
+                )}
             </Space>
         </div>
     )
