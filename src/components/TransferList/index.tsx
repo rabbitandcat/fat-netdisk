@@ -30,7 +30,7 @@ const TransferList: React.FC = () => {
             date: 0,
             type: TaskType.download,
             status: TransferStatus.default,
-            progress: 0
+            progress: 23
         },
         {
             id: '2',
@@ -39,7 +39,7 @@ const TransferList: React.FC = () => {
             date: 0,
             type: TaskType.download,
             status: TransferStatus.default,
-            progress: 0
+            progress: 100
         }
     ]);
 
