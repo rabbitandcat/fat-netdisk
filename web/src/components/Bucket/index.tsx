@@ -9,10 +9,12 @@ import { Item } from '../../lib/vdir/types'
 import shortid from 'shortid'
 import Empty from './Empty'
 
+import { getBucketFileList } from '../../api/bucket'
+import VFolder from '../../lib/vdir/VFolder'
+
 
 const Bucket: React.FC = () => {
-
-    const items: Item[] = [
+    const [items, setItems] = useState<Item[]>([
         {
             name: '学习视频1',
             webkitRelativePath: '/path',
@@ -43,8 +45,19 @@ const Bucket: React.FC = () => {
             lastModifiedDate: new Date(),
             shortId: shortid()
         },
-    ]
+    ])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
+
+    const displayBucketFiles = (res: any) => {
+        // setItems(res);
+    }
+
+    const onRefresh = async () => {
+        console.log('onRefresh');
+        const res = await getBucketFileList()
+        displayBucketFiles(res)
+    }
+
 
     const onChangeLayout = async () => {
         const nextLayout = layout === Layout.grid ? Layout.table : Layout.grid;
@@ -70,6 +83,7 @@ const Bucket: React.FC = () => {
         <div className="main-content">
             <HeaderButtonGroup></HeaderButtonGroup>
             <HeaderToolbar
+                onRefresh={onRefresh}
                 layout={layout}
                 onChangeLayout={onChangeLayout}
             ></HeaderToolbar>

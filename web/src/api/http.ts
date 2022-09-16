@@ -2,12 +2,13 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 import EnvUtil from '../utils/env.util'
 
-export const BASE_URL = EnvUtil.isDev ? 'http://localhost:8080/api/' : '/api/'
+export const BASE_URL = EnvUtil.isDev ? 'http://localhost:9000/haha/' : '/haha/'
 
 const http = axios.create({
-    baseURL: BASE_URL,
+    baseURL: '/haha',
     headers: {
         'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
     }
 })
 
@@ -32,6 +33,7 @@ http.interceptors.response.use(function (response: AxiosResponse) {
 
 export default <T = any>(config: AxiosRequestConfig) => {
     return http(config).then((res) => {
+        console.log('接收到了参数', res.data);
         return (res.data) as T
     })
 }

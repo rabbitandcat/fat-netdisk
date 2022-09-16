@@ -11,7 +11,8 @@ import TableIcon from "../../../assets/images/table.png";
 
 type PropTypes = {
     layout: Layout,
-    onChangeLayout: any,
+    onChangeLayout: () => void,
+    onRefresh: () => void
 }
 
 const HeaderTollbar: React.FC<PropTypes> = params => {
@@ -25,7 +26,9 @@ const HeaderTollbar: React.FC<PropTypes> = params => {
                         alt=""
                     />
                 </Button>
-                <Button size="small">
+                <Button size="small"
+                    onClick={params.onRefresh}
+                >
                     <img
                         className="reload"
                         role="presentation"
