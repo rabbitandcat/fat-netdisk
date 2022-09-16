@@ -1,0 +1,84 @@
+@import "../../style/variables";
+
+.side-bar {
+    width: 240px;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #865c55 0%, #6b6b7f96 100%);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    .top-wrapper {
+        width: 240px;
+        height: 94px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .title {
+            font-size: 24px;
+            color: $color-font;
+        }
+    }
+    .nav-menu {
+        width: 240px;
+        height: 200px;
+        padding: 0 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        flex: 1;
+        li {
+            width: 100%;
+            padding: 12px 24px;
+            margin: 2px 0;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            &:hover {
+                background-color: #6b6b7f;
+            }
+            img {
+                margin-right: 12px;
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+    .bottom-wrapper {
+        width: 216px;
+        height: 60px;
+        padding: 0 24px;
+        margin: 10px 0 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 16px;
+        &:hover {
+            background-color: #6b6b7f;
+            cursor: pointer;
+        }
+        .bottom-user-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+                transform: scale(1.2);
+            }
+            .user-avatar {
+                width: 20px;
+                height: 20px;
+                margin-right: 6px;
+            }
+            .user-name {
+            }
+        }
+        .bottom-dropdown-button {
+            &:hover {
+                transform: scale(1.5);
+            }
+        }
+    }
+}
