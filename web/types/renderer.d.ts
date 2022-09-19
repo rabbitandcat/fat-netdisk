@@ -10,11 +10,10 @@ declare module "*.mp3";
 declare interface BucketItem {
   name: string;
   webkitRelativePath: string;
-  meta: any;
   type: string;
   size: number;
   lastModified: number;
-  lastModifiedDate: Date;
+  lastModifiedDate: string;
 }
 
 declare interface BucketAdapter {

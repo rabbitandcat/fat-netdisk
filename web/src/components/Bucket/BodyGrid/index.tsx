@@ -8,39 +8,45 @@ import IconFont from "../../IconFont";
 
 type PropTypes = {
     items: Item[],
+    onFolderSelect: (name: string) => void,
 }
 
 const BodyGrid: React.FC<PropTypes> = params => {
 
     const renderVFile = (item: VFile) => {
-        return (
-            <div
-                className="file-cell-grid"
-                key={item.name}
-            >
+        if (item.name) {
+            return (
                 <div
-                    className="file-cell-grid-inner"
-                    data-row-key={item.shortId}
-                    title={item.name}
+                    className="file-cell-grid"
+                    key={item.name}
                 >
-                    <IconFont type="icon-documents" style={{ fontSize: 45 }} />
-                    <span className="name">{item.name}</span>
+                    <div
+                        className="file-cell-grid-inner"
+                        title={item.name}
+                    >
+                        <IconFont type="icon-documents" style={{ fontSize: 50 }} />
+                        <span className="name">{item.name}</span>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     };
     const renderVFolder = (item: VFolder) => {
-        return (
-            <div
-                className="file-cell-grid"
-                key={item.name}
-            >
-                <div className="file-cell-grid-inner" data-row-key={item.shortId}>
-                    <IconFont type="icon-wenjian" style={{ fontSize: 50 }} />
-                    <span className="name">{item.name}</span>
+        if (item.name) {
+
+            return (
+                <div
+                    className="file-cell-grid"
+                    key={item.name}
+                    onDoubleClick={() => params.onFolderSelect(item.name)}
+                >
+                    <div className="file-cell-grid-inner">
+                        <IconFont type="icon-wenjian" style={{ fontSize: 50 }} />
+                        <span className="name">{item.name}</span>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     };
     const renderItem = (item: Item) => {
         return item instanceof VFile ? renderVFile(item) : renderVFolder(item);

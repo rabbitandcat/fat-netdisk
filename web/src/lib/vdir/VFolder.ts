@@ -12,9 +12,7 @@ export default class VFolder {
 
   lastModified = 0;
 
-  lastModifiedDate = new Date(0);
-
-  shortId = shortId();
+  lastModifiedDate = "2006-01-02 15:04:05";
 
   private children: Item[];
 
@@ -31,7 +29,7 @@ export default class VFolder {
   }
 
   public static from(itemList: BucketItem[]): VFolder {
-    const dir = new VFolder("#");
+    const dir = new VFolder("Root");
     itemList.forEach(item => dir.touchFile(item));
     return dir;
   }
@@ -106,7 +104,9 @@ export default class VFolder {
    * @param r 是否递归创建， false 直接以 vpath 为 name 创建文件
    */
   private touchFile(item: BucketItem, r = true): VFile {
+    // 获取itme的路径
     const vpath = item.webkitRelativePath;
+    // 转换路径格式
     const dirPath = dirname(vpath);
 
     let cursor: VFolder;
@@ -121,7 +121,6 @@ export default class VFolder {
     cursor.size += file.size || 0;
     if (cursor.lastModified < file.lastModified) {
       cursor.lastModified = file.lastModified;
-      cursor.lastModifiedDate = new Date(cursor.lastModified);
     }
 
     cursor.children.push(file);

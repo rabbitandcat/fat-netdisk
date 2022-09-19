@@ -14,42 +14,16 @@ import VFolder from '../../lib/vdir/VFolder'
 
 
 const Bucket: React.FC = () => {
-    const [items, setItems] = useState<Item[]>([
-        {
-            name: '学习视频1',
-            webkitRelativePath: '/path',
-            meta: 'meta1',
-            type: 'file',
-            size: 0,
-            lastModified: 0,
-            lastModifiedDate: new Date(),
-            shortId: shortid()
-        },
-        {
-            name: '学习视频2',
-            webkitRelativePath: '/path',
-            meta: 'meta2',
-            type: 'file',
-            size: 1,
-            lastModified: 0,
-            lastModifiedDate: new Date(),
-            shortId: shortid()
-        },
-        {
-            name: '学习视频3',
-            webkitRelativePath: '/path',
-            meta: 'meta2',
-            type: 'file',
-            size: 1,
-            lastModified: 0,
-            lastModifiedDate: new Date(),
-            shortId: shortid()
-        },
-    ])
+    const [vFolder, setVFolder] = useState<VFolder>(new VFolder("Root"));
+    const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
 
     const displayBucketFiles = (res: any) => {
-        // setItems(res);
+        const vf = VFolder.from(res.data)
+        setVFolder(vf);
+        console.log("已经传入res.data", res.data);
+        console.log("当前列表", vf.listFiles())
+        setItems(vf.listFiles())
     }
 
     const onRefresh = async () => {
@@ -64,6 +38,11 @@ const Bucket: React.FC = () => {
         setLayout(nextLayout);
     };
 
+    const onFolderSelect = (name: string) => {
+        vFolder.changeDir(name)
+        setItems(vFolder.listFiles())
+    }
+
     const renderMainLayout = () => {
         if (items.length <= 0) {
             return <Empty title="没有文件" subTitle="当前 bucket 中没有文件" />;
@@ -71,9 +50,11 @@ const Bucket: React.FC = () => {
         return layout === Layout.grid ? (
             <BodyGrid
                 items={items}
+                onFolderSelect={onFolderSelect}
             ></BodyGrid>
         ) : (
             <BodyTable
+                onFolderSelect={onFolderSelect}
                 items={items}
             ></BodyTable>
         )

@@ -5,22 +5,17 @@ export default class VFile {
 
   webkitRelativePath: string;
 
-  meta: any;
-
   type: string;
 
   size = 0;
 
   lastModified = 0;
 
-  lastModifiedDate = new Date();
-
-  shortId = shortId();
+  lastModifiedDate = "2006-01-02 15:04:05";
 
   constructor({
     name,
     webkitRelativePath,
-    meta,
     type,
     size,
     lastModified,
@@ -32,6 +27,5 @@ export default class VFile {
     this.lastModified = lastModified;
     this.lastModifiedDate = lastModifiedDate;
     this.webkitRelativePath = webkitRelativePath;
-    this.meta = meta;
   }
 }

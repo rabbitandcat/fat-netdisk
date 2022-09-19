@@ -9,6 +9,7 @@ import shortid from 'shortid';
 
 type PropTypes = {
     items: Item[],
+    onFolderSelect: (name: string) => void,
 }
 
 const BodyTable: React.FC<PropTypes> = params => {
@@ -17,13 +18,17 @@ const BodyTable: React.FC<PropTypes> = params => {
         {
             title: "文件名",
             dataIndex: "name",
-            key: "shortId",
+            key: "name",
             ellipsis: true,
             render(name: string, item: Item) {
                 return (
                     <div className="file-meta">
                         <Icon
-                            type={'icon-documents'}
+                            type={
+                                item instanceof VFile
+                                    ? "icon-documents"
+                                    : "icon-wenjian"
+                            }
                             className="file-icon"
                         />
                         <div className="file-name">{name}</div>
@@ -38,17 +43,16 @@ const BodyTable: React.FC<PropTypes> = params => {
             sorter: (a: Item, b: Item) => a.size - b.size,
             ellipsis: true,
             render(size: number) {
-                return "0 Bytes";
+                return size;
             }
         },
         {
             title: "修改日期",
-            dataIndex: "lastModified",
-            key: "lastModified",
+            dataIndex: "lastModifiedDate",
+            key: "lastModifiedDate",
             ellipsis: true,
-            sorter: (a: Item, b: Item) => a.lastModified - b.lastModified,
-            render(timestamp: number) {
-                return "YYYY年MM月DD日 HH:mm:ss";
+            render(lastModifiedDate: string) {
+                return lastModifiedDate;
             }
         }
     ];
@@ -56,7 +60,7 @@ const BodyTable: React.FC<PropTypes> = params => {
     return (
         <div className="file-wrapper-table">
             <Table
-                rowKey="shortId"
+                rowKey="name"
                 size="small"
                 dataSource={params.items}
                 childrenColumnName="never"
