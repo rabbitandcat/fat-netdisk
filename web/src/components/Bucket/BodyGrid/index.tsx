@@ -14,7 +14,6 @@ type PropTypes = {
 const BodyGrid: React.FC<PropTypes> = params => {
 
     const renderVFile = (item: VFile) => {
-        if (item.name) {
             return (
                 <div
                     className="file-cell-grid"
@@ -29,11 +28,8 @@ const BodyGrid: React.FC<PropTypes> = params => {
                     </div>
                 </div>
             );
-        }
     };
     const renderVFolder = (item: VFolder) => {
-        if (item.name) {
-
             return (
                 <div
                     className="file-cell-grid"
@@ -46,7 +42,6 @@ const BodyGrid: React.FC<PropTypes> = params => {
                     </div>
                 </div>
             );
-        }
     };
     const renderItem = (item: Item) => {
         return item instanceof VFile ? renderVFile(item) : renderVFolder(item);

@@ -103,27 +103,32 @@ export default class VFolder {
    * @param item 对于根目录的相对路径，第一个字符不是 .
    * @param r 是否递归创建， false 直接以 vpath 为 name 创建文件
    */
-  private touchFile(item: BucketItem, r = true): VFile {
-    // 获取itme的路径
-    const vpath = item.webkitRelativePath;
-    // 转换路径格式
-    const dirPath = dirname(vpath);
+  private touchFile(item: BucketItem, r = true): VFile | null{
+    if(item.name) {
 
-    let cursor: VFolder;
-    if (r && dirPath !== "") {
-      // const base = basename(dirPath);
-      cursor = this.mkdir(dirPath);
+      // 获取itme的路径
+      const vpath = item.webkitRelativePath;
+      // 转换路径格式
+      const dirPath = dirname(vpath);
+  
+      let cursor: VFolder;
+      if (r && dirPath !== "") {
+        // const base = basename(dirPath);
+        cursor = this.mkdir(dirPath);
+      } else {
+        cursor = this;
+      }
+      const file = new VFile(item);
+      // 计算文件夹大小、修改时间
+      cursor.size += file.size || 0;
+      if (cursor.lastModified < file.lastModified) {
+        cursor.lastModified = file.lastModified;
+      }
+  
+      cursor.children.push(file);
+      return file;
     } else {
-      cursor = this;
+      return null
     }
-    const file = new VFile(item);
-    // 计算文件夹大小、修改时间
-    cursor.size += file.size || 0;
-    if (cursor.lastModified < file.lastModified) {
-      cursor.lastModified = file.lastModified;
-    }
-
-    cursor.children.push(file);
-    return file;
   }
 }

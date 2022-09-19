@@ -68,6 +68,20 @@ const BodyTable: React.FC<PropTypes> = params => {
                 scroll={{ y: 800 }}
                 columns={columns}
                 pagination={false}
+                onRow={record => {
+                    return {
+                      onDoubleClick(event) {
+                        if (record instanceof VFolder) {
+                          params.onFolderSelect(record.name);
+                        }
+                      },
+                    //   onContextMenu(event) {
+                    //     if (record instanceof VFile) {
+                    //       params.onFileContextMenu(event, record);
+                    //     }
+                    //   }
+                    };
+                  }}
             />
         </div>
     )
