@@ -1,7 +1,10 @@
 package v1
 
 import (
+	"fat-netdisk/model"
+	"fat-netdisk/utils/errmsg"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type BucketFile struct {
@@ -16,28 +19,10 @@ type BucketFile struct {
 }
 
 func GetBucketFileList(c *gin.Context) {
-	data := []map[string]interface{}{
-		{
-			"name":             "test",
-			"meta":             "test",
-			"type":             "test",
-			"size":             1,
-			"lastModified":     1,
-			"lastModifiedDate": 1,
-		},
-		{
-			"name":             "test2",
-			"meta":             "test2",
-			"type":             "test2",
-			"size":             1,
-			"lastModified":     1,
-			"lastModifiedDate": 1,
-		},
-	}
-
-	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "获取成功",
-		"data":    data,
+	fileInfoList, code := model.GetFileList()
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"message": errmsg.GetErrMsg(code),
+		"data":    fileInfoList,
 	})
 }
