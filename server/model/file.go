@@ -25,18 +25,6 @@ var ImgUrl = utils.QiniuSever
 
 var fileList []string
 
-var newData returnData
-
-type returnData struct {
-	Name     string `json:"name"`
-	Hash     string `json:"hash"`
-	Fsize    int64  `json:"fsize"`
-	PutTime  string `json:"putTime"`
-	MimeType string `json:"mimeType"`
-	Type     int    `json:"type"`
-	Error    string `json:"error"`
-}
-
 type VFile struct {
 	Name               string `json:"name"`
 	WebkitRelativePath string `json:"webkitRelativePath"`
@@ -87,6 +75,7 @@ func ItemAdapter(item storage.ListItem) VFile {
 	file.WebkitRelativePath = item.Key
 	path := strings.Split(item.Key, "/")
 	file.Name = path[len(path)-1]
+	//file.Name = file.Name[:len(file.Name)-1]
 	file.Type = item.MimeType
 	file.Size = item.Fsize
 	file.LastModified = 0
