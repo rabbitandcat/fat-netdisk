@@ -73,7 +73,7 @@ func GetFileList() ([]interface{}, int) {
 }
 
 func UpLoadFile(file multipart.File, fileSize int64, fileName string, filePath string) (string, int) {
-	key := "天堂一层/" + filePath
+	key := filePath
 	putPolicy := storage.PutPolicy{
 		Scope:      Bucket,
 		ReturnBody: `{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"bucket":"$(bucket)","name":"$(x:name)"}`,

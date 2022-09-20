@@ -22,6 +22,8 @@ func GetBucketFileList(c *gin.Context) {
 
 func UploadFile(c *gin.Context) {
 	file, fileHeader, _ := c.Request.FormFile("file")
+	prefix := c.Query("prefix")
+	fmt.Println("prefix是", prefix)
 	// 解析标头
 	header := fileHeader.Header.Get("Content-Disposition")
 	if header != "" {
@@ -35,7 +37,7 @@ func UploadFile(c *gin.Context) {
 			fmt.Println("filename parameter not exist!")
 			return
 		}
-		filePath = path
+		filePath = prefix + "/" + path
 	}
 	fileName := fileHeader.Filename
 	fileSize := fileHeader.Size
