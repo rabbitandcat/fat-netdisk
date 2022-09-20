@@ -7,19 +7,24 @@ import ReloadIcon from "../../../assets/images/reload.png";
 import SearchIcon from "../../../assets/images/search.png";
 import GridIcon from "../../../assets/images/grid.png";
 import TableIcon from "../../../assets/images/table.png";
+import VFolder from '../../../lib/vdir/VFolder';
 
 
 type PropTypes = {
     layout: Layout,
     onChangeLayout: () => void,
-    onRefresh: () => void
+    onRefresh: () => void,
+    navigators: string[],
+    backspace: () => void;
 }
 
 const HeaderTollbar: React.FC<PropTypes> = params => {
     return (
         <div className="control-btns">
             <Space size="middle" align="center" className="left-wrapper">
-                <Button size="small">
+                <Button size="small" onClick={params.backspace}
+
+                >
                     <img
                         className='back'
                         src={BackIcon}
@@ -38,9 +43,9 @@ const HeaderTollbar: React.FC<PropTypes> = params => {
                 </Button>
 
                 <Breadcrumb>
-                    <Breadcrumb.Item>首页</Breadcrumb.Item>
-                    <Breadcrumb.Item>我的资源</Breadcrumb.Item>
-                    <Breadcrumb.Item>学习资料</Breadcrumb.Item>
+                    {["首页"].concat(params.navigators).map(item => (
+                        <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
+                    ))}
                 </Breadcrumb>
             </Space>
             <Space size="middle" align="center" className="right-wrapper">

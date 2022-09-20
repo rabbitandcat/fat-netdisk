@@ -19,6 +19,7 @@ const Bucket: React.FC = () => {
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
 
+
     const levelOrder = (root: VFolder) => {
         // 层序遍历，得到所有文件夹
         let res: any[] = []
@@ -30,8 +31,8 @@ const Bucket: React.FC = () => {
             for (let i = 0; i < len; i++) {
                 let node = q.shift()
                 curLevel.push(node)
-                for(let j = 0; j < node.children.length; j++) {
-                    if(node.children[j] instanceof VFolder) {
+                for (let j = 0; j < node.children.length; j++) {
+                    if (node.children[j] instanceof VFolder) {
                         q.push(node.children[j])
                     }
                 }
@@ -43,13 +44,13 @@ const Bucket: React.FC = () => {
     // 倒序层序遍历，得到所有文件夹的大小
     const reverseLevelOrder = (res: any) => {
         let depth = res.length - 1
-        for(let i = depth; i >= 0; i--) {
+        for (let i = depth; i >= 0; i--) {
             res[i].forEach((folder: VFolder) => {
                 folder.size = 0
                 folder.lastModifiedDate = folder.children[0].lastModifiedDate
                 folder.children.forEach((child: VFolder | VFile) => {
                     folder.size += child.size
-                    if(Date.parse(child.lastModifiedDate) > Date.parse(folder.lastModifiedDate)) {
+                    if (Date.parse(child.lastModifiedDate) > Date.parse(folder.lastModifiedDate)) {
                         folder.lastModifiedDate = child.lastModifiedDate
                     }
                 })
@@ -78,15 +79,20 @@ const Bucket: React.FC = () => {
     };
 
     const onFolderSelect = (name: string) => {
-        vFolder.changeDir(name)
-        setItems(vFolder.listFiles())
+        vFolder.changeDir(name);
+        setItems(vFolder.listFiles());
     }
+
+    const backspace = () => {
+        vFolder.back();
+        setItems(vFolder.listFiles());
+      };
 
     const renderMainLayout = () => {
         if (items.length <= 0) {
             return <Empty title="没有文件" subTitle="当前 bucket 中没有文件" />;
         }
-        return layout === Layout.grid ? (
+        return layout === Layout.table ? (
             <BodyGrid
                 items={items}
                 onFolderSelect={onFolderSelect}
@@ -106,6 +112,8 @@ const Bucket: React.FC = () => {
                 onRefresh={onRefresh}
                 layout={layout}
                 onChangeLayout={onChangeLayout}
+                navigators={vFolder.getNav()}
+                backspace={backspace}
             ></HeaderToolbar>
             {renderMainLayout()}
         </div>
