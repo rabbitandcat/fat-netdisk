@@ -3,10 +3,17 @@ import { Button, Space, Input, Breadcrumb, Table } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 
-const HeaderButtonGroup: React.FC = () => {
+type PropTypes = {
+    fileUpload: () => void;
+    // selectedItems: string[];
+    // onDownload: () => void;
+    // onDelete: () => void;
+  };
+
+const HeaderButtonGroup: React.FC<PropTypes> = params => {
     return (
         <Space size="middle" className="transfer-btns">
-            <Button size="middle"><UploadOutlined />上传文件</Button>
+            <Button size="middle" onClick={params.fileUpload}><UploadOutlined />上传文件</Button>
             <Button size="middle">下载</Button>
             <Button size="middle">删除</Button>
         </Space>

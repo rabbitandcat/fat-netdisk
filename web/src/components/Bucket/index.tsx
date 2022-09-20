@@ -12,7 +12,7 @@ import Empty from './Empty'
 import { getBucketFileList } from '../../api/bucket'
 import VFolder from '../../lib/vdir/VFolder'
 import VFile from '../../lib/vdir/VFile'
-import { Spin } from 'antd'
+import { message, Spin } from 'antd'
 
 
 const Bucket: React.FC = () => {
@@ -115,13 +115,34 @@ const Bucket: React.FC = () => {
         )
     }
 
+    const handleUpload = async (paths: string[]) => {
+        try {
+          await uploadFiles({
+            remoteDir: vFolder.getPathPrefix(),
+            fileList: paths
+          });
+        } catch (e: any) {
+          message.error(e.message);
+        }
+      };
+
     useEffect(() => {
         onRefresh()
       }, [1]);
 
     return (
         <div className="main-content">
-            <HeaderButtonGroup></HeaderButtonGroup>
+            <HeaderButtonGroup
+                fileUpload={async () => {
+                    const userPath = remote.app.getPath("documents");
+                    const result = await remote.dialog.showOpenDialog({
+                      defaultPath: userPath,
+                      properties: ["openFile"]
+                    });
+                    if (result.canceled) return;
+                    await handleUpload(result.filePaths);
+                  }}
+            ></HeaderButtonGroup>
             <HeaderToolbar
                 onRefresh={onRefresh}
                 layout={layout}
