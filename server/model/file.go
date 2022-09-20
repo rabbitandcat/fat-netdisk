@@ -1,11 +1,13 @@
 package model
 
 import (
+	"context"
 	"fat-netdisk/utils"
 	"fat-netdisk/utils/errmsg"
 	"fmt"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
 	"github.com/qiniu/go-sdk/v7/storage"
+	"mime/multipart"
 	"strings"
 )
 
@@ -68,6 +70,40 @@ func GetFileList() ([]interface{}, int) {
 		}
 	}
 	return fileInfoList, errmsg.SUCCESS
+}
+
+func UpLoadFile(file multipart.File, fileSize int64, fileName string, filePath string) (string, int) {
+	key := "天堂一层/" + filePath
+	putPolicy := storage.PutPolicy{
+		Scope:      Bucket,
+		ReturnBody: `{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"bucket":"$(bucket)","name":"$(x:name)"}`,
+	}
+	mac := qbox.NewMac(AccessKey, SecretKey)
+	upToken := putPolicy.UploadToken(mac)
+
+	cfg := storage.Config{
+		Zone:          &storage.ZoneHuabei,
+		UseCdnDomains: false,
+		UseHTTPS:      false,
+	}
+
+	putExtra := storage.PutExtra{
+		Params: map[string]string{
+			"x:name": fileName,
+		},
+	}
+
+	formUploader := storage.NewFormUploader(&cfg)
+	ret := MyPutRet{}
+
+	err := formUploader.Put(context.Background(), &ret, upToken, key, file, fileSize, &putExtra)
+	if err != nil {
+		fmt.Println("上传失败", err)
+		return "", errmsg.ERROR
+	}
+	url := ImgUrl + ret.Key
+	fmt.Printf("ret.Key:%s, ret.Name:%s, ret.Hash:%s, ret.Fsize:%s, ret.Bucket:%s", ret.Key, ret.Name, ret.Hash, ret.Fsize, ret.Bucket)
+	return url, errmsg.SUCCESS
 }
 
 func ItemAdapter(item storage.ListItem) VFile {

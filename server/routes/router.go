@@ -14,6 +14,7 @@ func InitRouter() {
 	auth.Use(middleware.Cors())
 	{
 		auth.GET("BucketFileList", v1.GetBucketFileList)
+		auth.POST("UploadFile", v1.UploadFile)
 	}
 
 	_ = r.Run(utils.HttpPort)
