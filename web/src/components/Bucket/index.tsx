@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.scss'
 import HeaderButtonGroup from './HeaderButtonGroup'
 import HeaderToolbar from './HeaderToolbar'
@@ -9,15 +9,17 @@ import { Item } from '../../lib/vdir/types'
 import shortid from 'shortid'
 import Empty from './Empty'
 
-import { getBucketFileList } from '../../api/bucket'
+import { getBucketFileList, uploadFileList } from '../../api/bucket'
 import VFolder from '../../lib/vdir/VFolder'
 import VFile from '../../lib/vdir/VFile'
+import { message, Spin } from 'antd'
 
 
 const Bucket: React.FC = () => {
     const [vFolder, setVFolder] = useState<VFolder>(new VFolder("Root"));
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
+    const [loading, setLoading] = useState<boolean>(false);
 
 
     const levelOrder = (root: VFolder) => {
@@ -67,9 +69,11 @@ const Bucket: React.FC = () => {
     }
 
     const onRefresh = async () => {
+        setLoading(true);
         console.log('onRefresh');
         const res = await getBucketFileList()
         displayBucketFiles(res)
+        setLoading(false);
     }
 
 
@@ -86,9 +90,9 @@ const Bucket: React.FC = () => {
     const backspace = () => {
         vFolder.back();
         setItems(vFolder.listFiles());
-      };
+    };
 
-    
+
     const jumpTo = (path: string) => {
         vFolder.jumpTo(path);
         setItems(vFolder.listFiles());
@@ -111,9 +115,30 @@ const Bucket: React.FC = () => {
         )
     }
 
+    // const handleUpload = async () => {
+    //     console.log(formData);
+        
+    //     try {
+    //         const res = await uploadFileList(formData)
+    //         message.success('上传成功')
+    //         console.log(res);
+            
+    //         // displayBucketFiles(res)
+    //     } catch (error) {
+    //         message.error('上传失败')
+    //     }
+    // }
+
+
+    useEffect(() => {
+        onRefresh()
+    }, []);
+
     return (
         <div className="main-content">
-            <HeaderButtonGroup></HeaderButtonGroup>
+            <HeaderButtonGroup
+                vFolder={vFolder}
+            ></HeaderButtonGroup>
             <HeaderToolbar
                 onRefresh={onRefresh}
                 layout={layout}
@@ -122,7 +147,9 @@ const Bucket: React.FC = () => {
                 backspace={backspace}
                 jumpTo={jumpTo}
             ></HeaderToolbar>
-            {renderMainLayout()}
+            <Spin spinning={loading} wrapperClassName="loading-wrapper">
+                {renderMainLayout()}
+            </Spin>
         </div>
     )
 }

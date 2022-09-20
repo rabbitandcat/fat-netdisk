@@ -4,6 +4,13 @@ import "normalize.css/normalize.css"
 import "antd/dist/antd.css"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import MainPage from "./pages/main-page"
+import { Spin } from 'antd'
+import { LoadingOutlined } from "@ant-design/icons";
+
+
+Spin.setDefaultIndicator(
+  <LoadingOutlined style={{ fontSize: 25, color: "#fff" }} />
+);
 
 function App() {
   return (
