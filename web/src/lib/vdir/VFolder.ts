@@ -18,7 +18,7 @@ export default class VFolder {
 
   private cursor: VFolder;
 
-  private navigator: string[] = [];
+  navigator: string[] = [];
 
   constructor(name: string, parent: Parent = null) {
     this.name = name;

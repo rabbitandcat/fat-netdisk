@@ -7,3 +7,11 @@ export const getBucketFileList = () => {
     })
 }
 
+
+export const uploadFileList = (data: any, newPath?: string) => {
+    return http({
+        method: 'POST',
+        url: `/UploadFile?prefix=${newPath}`,
+        data
+    })
+}
