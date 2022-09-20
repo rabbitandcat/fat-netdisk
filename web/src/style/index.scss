@@ -204,6 +204,10 @@
   .ant-breadcrumb {
     .ant-breadcrumb-link {
       color: #fff;
+      &:hover {
+        cursor: pointer;
+        border-bottom: 1px solid #fff;
+      }
     }
   
     .ant-breadcrumb-separator {

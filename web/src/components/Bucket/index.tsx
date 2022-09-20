@@ -88,6 +88,12 @@ const Bucket: React.FC = () => {
         setItems(vFolder.listFiles());
       };
 
+    
+    const jumpTo = (path: string) => {
+        vFolder.jumpTo(path);
+        setItems(vFolder.listFiles());
+    }
+
     const renderMainLayout = () => {
         if (items.length <= 0) {
             return <Empty title="没有文件" subTitle="当前 bucket 中没有文件" />;
@@ -114,6 +120,7 @@ const Bucket: React.FC = () => {
                 onChangeLayout={onChangeLayout}
                 navigators={vFolder.getNav()}
                 backspace={backspace}
+                jumpTo={jumpTo}
             ></HeaderToolbar>
             {renderMainLayout()}
         </div>

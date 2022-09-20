@@ -57,6 +57,13 @@ export default class VFolder {
     }
   }
 
+  public jumpTo (path: string) {
+    while (this.cursor.parent && this.cursor.name !== path) {
+      this.navigator.pop();
+      this.cursor = this.cursor.parent;
+    }
+  }
+
   public getNav() {
     return this.navigator;
   }

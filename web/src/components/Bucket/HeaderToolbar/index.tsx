@@ -16,6 +16,7 @@ type PropTypes = {
     onRefresh: () => void,
     navigators: string[],
     backspace: () => void;
+    jumpTo: (path: string) => void;
 }
 
 const HeaderTollbar: React.FC<PropTypes> = params => {
@@ -44,7 +45,7 @@ const HeaderTollbar: React.FC<PropTypes> = params => {
 
                 <Breadcrumb>
                     {["首页"].concat(params.navigators).map(item => (
-                        <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={() => params.jumpTo(item)} key={item}>{item}</Breadcrumb.Item>
                     ))}
                 </Breadcrumb>
             </Space>
