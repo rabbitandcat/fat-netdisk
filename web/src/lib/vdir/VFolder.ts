@@ -14,7 +14,7 @@ export default class VFolder {
 
   lastModifiedDate = "2006-01-02 15:04:05";
 
-  private children: Item[];
+  children: Item[];
 
   private cursor: VFolder;
 
