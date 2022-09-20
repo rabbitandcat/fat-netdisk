@@ -75,7 +75,6 @@ func ItemAdapter(item storage.ListItem) VFile {
 	file.WebkitRelativePath = item.Key
 	path := strings.Split(item.Key, "/")
 	file.Name = path[len(path)-1]
-	//file.Name = file.Name[:len(file.Name)-1]
 	file.Type = item.MimeType
 	file.Size = item.Fsize
 	file.LastModified = 0
