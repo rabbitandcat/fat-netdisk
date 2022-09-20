@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.scss'
 import HeaderButtonGroup from './HeaderButtonGroup'
 import HeaderToolbar from './HeaderToolbar'
@@ -12,12 +12,14 @@ import Empty from './Empty'
 import { getBucketFileList } from '../../api/bucket'
 import VFolder from '../../lib/vdir/VFolder'
 import VFile from '../../lib/vdir/VFile'
+import { Spin } from 'antd'
 
 
 const Bucket: React.FC = () => {
     const [vFolder, setVFolder] = useState<VFolder>(new VFolder("Root"));
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
+    const [loading, setLoading] = useState<boolean>(false);
 
 
     const levelOrder = (root: VFolder) => {
@@ -67,9 +69,11 @@ const Bucket: React.FC = () => {
     }
 
     const onRefresh = async () => {
+        setLoading(true);
         console.log('onRefresh');
         const res = await getBucketFileList()
         displayBucketFiles(res)
+        setLoading(false);
     }
 
 
@@ -86,9 +90,9 @@ const Bucket: React.FC = () => {
     const backspace = () => {
         vFolder.back();
         setItems(vFolder.listFiles());
-      };
+    };
 
-    
+
     const jumpTo = (path: string) => {
         vFolder.jumpTo(path);
         setItems(vFolder.listFiles());
@@ -111,6 +115,10 @@ const Bucket: React.FC = () => {
         )
     }
 
+    useEffect(() => {
+        onRefresh()
+      }, [1]);
+
     return (
         <div className="main-content">
             <HeaderButtonGroup></HeaderButtonGroup>
@@ -122,7 +130,9 @@ const Bucket: React.FC = () => {
                 backspace={backspace}
                 jumpTo={jumpTo}
             ></HeaderToolbar>
-            {renderMainLayout()}
+            <Spin spinning={loading} wrapperClassName="loading-wrapper">
+                {renderMainLayout()}
+            </Spin>
         </div>
     )
 }

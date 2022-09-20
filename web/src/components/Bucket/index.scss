@@ -92,75 +92,83 @@
             }
         }
     }
-    .file-wrapper-table {
+    .loading-wrapper {
+      height: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+      .ant-spin-container {
         height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        .file-meta {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-
-            .file-icon {
-              font-size: 25px;
-            }
-
-            .file-name {
-              overflow: hidden; //超出的文本隐藏
-              text-overflow: ellipsis; //溢出用省略号显示
-              white-space: nowrap; //溢出不换行
-              margin-left: 10px;
-            }
-          }
-    }
-    .file-wrapper-grid {
-        min-height: 100%;
-        overflow: hidden;
-
-        .file-cell-grid {
-          float: left;
-          height: 80px;
-          width: 80px;
-          margin: 5px;
-          overflow: hidden;
-
-          &:hover {
-            .file-cell-grid-inner {
-              background: rgba(0, 0, 0, 0.3);
-            }
-          }
-
-          .file-cell-grid-inner {
-            padding: 5px;
-            border-radius: 3px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .preview-image {
-              overflow: hidden;
-
-              img {
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
+        position: relative;
+      .file-wrapper-table {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          .file-meta {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+  
+              .file-icon {
+                font-size: 25px;
+              }
+  
+              .file-name {
+                overflow: hidden; //超出的文本隐藏
+                text-overflow: ellipsis; //溢出用省略号显示
+                white-space: nowrap; //溢出不换行
+                margin-left: 10px;
               }
             }
-
-            .name {
-              display: inline-block;
-              font-size: 12px;
-              line-height: 17px;
-              width: 100%;
-              color: #fff;
-              text-align: center;
-              padding-top: 3px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+      }
+      .file-wrapper-grid {
+          min-height: 100%;
+          overflow: hidden;
+  
+          .file-cell-grid {
+            float: left;
+            height: 80px;
+            width: 80px;
+            margin: 5px;
+            overflow: hidden;
+  
+            &:hover {
+              .file-cell-grid-inner {
+                background: rgba(0, 0, 0, 0.3);
+              }
+            }
+  
+            .file-cell-grid-inner {
+              padding: 5px;
+              border-radius: 3px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+  
+              .preview-image {
+                overflow: hidden;
+  
+                img {
+                  width: 50px;
+                  height: 50px;
+                  object-fit: cover;
+                }
+              }
+  
+              .name {
+                display: inline-block;
+                font-size: 12px;
+                line-height: 17px;
+                width: 100%;
+                color: #fff;
+                text-align: center;
+                padding-top: 3px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
             }
           }
         }
-      }
-}
+    }
+}}
