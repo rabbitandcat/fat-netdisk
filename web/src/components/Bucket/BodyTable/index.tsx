@@ -6,6 +6,16 @@ import VFolder from "../../../lib/vdir/VFolder";
 import VFile from "../../../lib/vdir/VFile";
 import shortid from 'shortid';
 
+const formatSize = (size: number) => {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    let i = 0;
+    while (size >= 1024) {
+        size /= 1024;
+        i++;
+    }
+    return size.toFixed(2) + units[i];
+}
+
 
 type PropTypes = {
     items: Item[],
@@ -54,7 +64,7 @@ const BodyTable: React.FC<PropTypes> = params => {
             sorter: (a: Item, b: Item) => a.size - b.size,
             ellipsis: true,
             render(size: number) {
-                return size;
+                return formatSize(size);
             }
         },
         {
