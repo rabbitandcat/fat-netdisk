@@ -11,6 +11,16 @@ type PropTypes = {
     onFolderSelect: (name: string) => void,
 }
 
+const sorter = (a: Item, b: Item) => {
+    if (a instanceof VFolder && b instanceof VFile) {
+        return -1
+    }
+    if (a instanceof VFile && b instanceof VFolder) {
+        return 1
+    }
+    return a.name.localeCompare(b.name)
+}
+
 const BodyGrid: React.FC<PropTypes> = params => {
 
     const renderVFile = (item: VFile) => {
@@ -53,7 +63,7 @@ const BodyGrid: React.FC<PropTypes> = params => {
             className="file-wrapper-grid"
             role="presentation"
         >
-            {params.items.map(renderItem)}
+            {params.items.sort(sorter).map(renderItem)}
         </div>
     );
 }
