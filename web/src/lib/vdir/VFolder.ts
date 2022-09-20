@@ -46,7 +46,7 @@ export default class VFolder {
     this.cursor =
       (this.cursor.children.find(
         item => item.name === path && VFolder.isDir(item)
-      ) as VFolder) || this.cursor;
+      ) as any) || this.cursor;
     this.navigator.push(path);
   }
 
@@ -69,9 +69,9 @@ export default class VFolder {
     return this.cursor.children.length;
   }
 
-  public getItem(fileId: string): Item | undefined {
-    return this.cursor.children.find(item => item.shortId === fileId);
-  }
+  // public getItem(fileId: string): Item | undefined {
+  //   return this.cursor.children.find(item => item.shortId === fileId);
+  // }
 
   public getItems() {
     return this.cursor.children;
@@ -91,9 +91,9 @@ export default class VFolder {
 
   private makeDir(name: string): VFolder {
     const find = this.children.find(i => i.name === name && VFolder.isDir(i));
-    if (find) return find as VFolder;
+    if (find) return find as any;
 
-    const dir = new VFolder(name, this);
+    const dir: any = new VFolder(name, this);
     this.children.push(dir);
     return dir;
   }

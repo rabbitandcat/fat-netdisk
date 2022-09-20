@@ -14,11 +14,21 @@ type PropTypes = {
 
 const BodyTable: React.FC<PropTypes> = params => {
 
-    const columns = [
+    const columns: any = [
         {
             title: "文件名",
             dataIndex: "name",
             key: "name",
+            defaultSortOrder: "ascend",
+            sorter: (a: Item, b: Item) => {
+                if (a instanceof VFolder && b instanceof VFile) {
+                    return -1
+                }
+                if (a instanceof VFile && b instanceof VFolder) {
+                    return 1
+                }
+                return a.name.localeCompare(b.name)
+            },
             ellipsis: true,
             render(name: string, item: Item) {
                 return (
@@ -40,6 +50,7 @@ const BodyTable: React.FC<PropTypes> = params => {
             title: "大小",
             dataIndex: "size",
             key: "size",
+            defaultSortOder: "default",
             sorter: (a: Item, b: Item) => a.size - b.size,
             ellipsis: true,
             render(size: number) {
@@ -50,7 +61,9 @@ const BodyTable: React.FC<PropTypes> = params => {
             title: "修改日期",
             dataIndex: "lastModifiedDate",
             key: "lastModifiedDate",
+            defaultSortOder: "default",
             ellipsis: true,
+            sorter: (a: Item, b: Item) => Date.parse(a.lastModifiedDate) - Date.parse(b.lastModifiedDate),
             render(lastModifiedDate: string) {
                 return lastModifiedDate;
             }
