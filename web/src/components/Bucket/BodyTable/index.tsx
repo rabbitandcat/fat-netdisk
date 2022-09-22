@@ -20,6 +20,8 @@ const formatSize = (size: number) => {
 type PropTypes = {
     items: Item[],
     onFolderSelect: (name: string) => void,
+    vFolder: VFolder,
+    selection: any,
 }
 
 const BodyTable: React.FC<PropTypes> = params => {
@@ -83,11 +85,9 @@ const BodyTable: React.FC<PropTypes> = params => {
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+          console.log('当前目录', params.vFolder.navigator[params.vFolder.navigator.length - 1]);
+          params.selection
         },
-        // getCheckboxProps: (record: DataType) => ({
-        //   disabled: record.name === 'Disabled User', // Column configuration not to be checked
-        //   name: record.name,
-        // }),
       };
 
     return (
@@ -104,16 +104,11 @@ const BodyTable: React.FC<PropTypes> = params => {
                 pagination={false}
                 onRow={record => {
                     return {
-                      onDoubleClick(event) {
-                        if (record instanceof VFolder) {
+                      onDoubleClick(event: any) {
+                        if (record instanceof VFolder && event.target.tagName !== "INPUT") {
                           params.onFolderSelect(record.name);
                         }
                       },
-                    //   onContextMenu(event) {
-                    //     if (record instanceof VFile) {
-                    //       params.onFileContextMenu(event, record);
-                    //     }
-                    //   }
                     };
                   }}
             />

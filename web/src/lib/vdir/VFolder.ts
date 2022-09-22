@@ -76,9 +76,9 @@ export default class VFolder {
     return this.cursor.children.length;
   }
 
-  // public getItem(fileId: string): Item | undefined {
-  //   return this.cursor.children.find(item => item.shortId === fileId);
-  // }
+  public getItem(fileName: string): Item | undefined {
+    return this.cursor.children.find(item => item.name === fileName);
+  }
 
   public getItems() {
     return this.cursor.children;

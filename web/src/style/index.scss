@@ -316,22 +316,22 @@ ul li {
           box-sizing: border-box;
 
           &.ant-table-column-sort {
-            background: transparent;
+            background-color: transparent;
           }
         }
 
         &:hover {
           .ant-table-cell {
-            background: rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.2);
           }
         }
       }
       .ant-table-row-selected {
         .ant-table-cell {
           // background: transparent
-          background: rgba(0, 0, 0, 0);
+          background-color: rgba(0, 0, 0, 0);
         }
-        background: rgba(0, 0, 0, 0.2);
+        background-color: rgba(0, 0, 0, 0.2);
 
         // .ant-table-column-sort{
         //   background: rgba(0, 0, 0, 0.2)

@@ -13,6 +13,7 @@ import { getBucketFileList, uploadFileList } from '../../api/bucket'
 import VFolder from '../../lib/vdir/VFolder'
 import VFile from '../../lib/vdir/VFile'
 import { message, Spin } from 'antd'
+import useSelection from '../../hooks/useSelection'
 
 
 const Bucket: React.FC = () => {
@@ -20,6 +21,7 @@ const Bucket: React.FC = () => {
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
     const [loading, setLoading] = useState<boolean>(false);
+    const selection = useSelection(items)
 
 
     const levelOrder = (root: VFolder) => {
@@ -76,6 +78,39 @@ const Bucket: React.FC = () => {
         setLoading(false);
     }
 
+    const _getFiles = (itemArr: any[]) => {
+        let files: VFile[] = [];
+        itemArr.forEach(item => {
+          if (item instanceof VFile) {
+            files.push(item);
+          } else {
+            files = [...files, ..._getFiles([...item.getItems()])];
+          }
+        });
+        return files
+    }
+
+    const getOperationFiles = (opItem?: Item) => {
+        // 开始获取选中文件数量
+        let files: VFile[] = [];
+        if (selection.fileNames.length > 0) {
+          // 如果选中区域有文件的话，那么下载选中区域的文件
+          const itemsArr: Item[] = [];
+          selection.fileNames.forEach(fileId => {
+            const item = vFolder.getItem(fileId);
+            if (item) itemsArr.push(item);
+          });
+          files = _getFiles(itemsArr);
+        }
+    
+        if (files.length <= 0 && opItem) {
+          // 如果选中区域没有文件，那么直接下载当前上下文中的区域
+          files = _getFiles([opItem]);
+        }
+    
+        return files;
+      };
+
 
     const onChangeLayout = async () => {
         const nextLayout = layout === Layout.grid ? Layout.table : Layout.grid;
@@ -109,26 +144,16 @@ const Bucket: React.FC = () => {
             ></BodyGrid>
         ) : (
             <BodyTable
+                selection={selection}
                 onFolderSelect={onFolderSelect}
                 items={items}
+                vFolder={vFolder}
             ></BodyTable>
         )
     }
 
-    // const handleUpload = async () => {
-    //     console.log(formData);
-        
-    //     try {
-    //         const res = await uploadFileList(formData)
-    //         message.success('上传成功')
-    //         console.log(res);
-            
-    //         // displayBucketFiles(res)
-    //     } catch (error) {
-    //         message.error('上传失败')
-    //     }
-    // }
 
+    
 
     useEffect(() => {
         onRefresh()
