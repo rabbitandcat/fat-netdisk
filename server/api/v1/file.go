@@ -9,6 +9,11 @@ import (
 	"net/http"
 )
 
+type DownloadInfo struct {
+	FileNamelist []string `json:"fileNameList"`
+	Prefix       string   `json:"prefix"`
+}
+
 var filePath string
 
 func GetBucketFileList(c *gin.Context) {
@@ -52,11 +57,13 @@ func UploadFile(c *gin.Context) {
 }
 
 func DownloadFile(c *gin.Context) {
-	fileKey := c.Query("fileName")
-	url, code := model.DownloadFile(fileKey)
+	var data DownloadInfo
+	_ = c.ShouldBindJSON(&data)
+	fmt.Println("data是", data)
+	urlList, code := model.DownloadFile(data.FileNamelist, data.Prefix)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"message": errmsg.GetErrMsg(code),
-		"url":     url,
+		"urlList": urlList,
 	})
 }

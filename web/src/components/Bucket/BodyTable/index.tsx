@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Space, Input, Breadcrumb, Table } from "antd";
 import { Item } from "../../../lib/vdir/types";
 import Icon from "../../../components/IconFont";
@@ -20,9 +20,13 @@ const formatSize = (size: number) => {
 type PropTypes = {
     items: Item[],
     onFolderSelect: (name: string) => void,
+    vFolder: VFolder,
+    selection: any,
 }
 
 const BodyTable: React.FC<PropTypes> = params => {
+
+    const [prefix, setPrefix] = useState<string>("");
 
     const columns: any = [
         {
@@ -80,6 +84,21 @@ const BodyTable: React.FC<PropTypes> = params => {
         }
     ];
 
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            console.log('当前目录', params.vFolder.navigator);
+            if (params.vFolder.navigator) {
+                setPrefix(params.vFolder.navigator.join('/'))
+            }
+            //   params.selection.setFileName(selectedRows[0].name);
+        },
+    };
+
+    useEffect(() => {
+        console.log('prefix', prefix);
+    }, [])
+
     return (
         <div className="file-wrapper-table">
             <Table
@@ -88,23 +107,19 @@ const BodyTable: React.FC<PropTypes> = params => {
                 dataSource={params.items}
                 childrenColumnName="never"
                 showSorterTooltip={false}
+                rowSelection={rowSelection}
                 scroll={{ y: 800 }}
                 columns={columns}
                 pagination={false}
                 onRow={record => {
                     return {
-                      onDoubleClick(event) {
-                        if (record instanceof VFolder) {
-                          params.onFolderSelect(record.name);
-                        }
-                      },
-                    //   onContextMenu(event) {
-                    //     if (record instanceof VFile) {
-                    //       params.onFileContextMenu(event, record);
-                    //     }
-                    //   }
+                        onDoubleClick(event: any) {
+                            if (record instanceof VFolder && event.target.tagName !== "INPUT") {
+                                params.onFolderSelect(record.name);
+                            }
+                        },
                     };
-                  }}
+                }}
             />
         </div>
     )

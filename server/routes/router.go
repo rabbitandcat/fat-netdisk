@@ -15,7 +15,7 @@ func InitRouter() {
 	{
 		auth.GET("BucketFileList", v1.GetBucketFileList)
 		auth.POST("UploadFile", v1.UploadFile)
-		auth.GET("DownloadFile", v1.DownloadFile)
+		auth.POST("DownloadFile", v1.DownloadFile)
 	}
 
 	_ = r.Run(utils.HttpPort)

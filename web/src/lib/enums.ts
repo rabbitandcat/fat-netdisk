@@ -22,3 +22,7 @@ export enum TransferStatus {
     done,
     failed
 }
+
+export enum KeyCode {
+    Escape = "Escape"
+  }

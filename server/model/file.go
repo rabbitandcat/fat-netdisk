@@ -106,11 +106,15 @@ func UpLoadFile(file multipart.File, fileSize int64, fileName string, filePath s
 	return url, errmsg.SUCCESS
 }
 
-func DownloadFile(key string) (string, int) {
-	domain := ImgUrl
-	publicAccessURL := storage.MakePublicURL(domain, key)
-	fmt.Println(publicAccessURL)
-	return publicAccessURL, errmsg.SUCCESS
+func DownloadFile(fileNameList []string, prefix string) ([]string, int) {
+	domain := utils.QiniuSever
+	urlList := []string{}
+	for _, fileName := range fileNameList {
+		fmt.Println(fileName)
+		urlList = append(urlList, storage.MakePublicURL(domain, prefix+"/"+fileName))
+	}
+	fmt.Println(urlList)
+	return urlList, errmsg.SUCCESS
 }
 
 func ItemAdapter(item storage.ListItem) VFile {
