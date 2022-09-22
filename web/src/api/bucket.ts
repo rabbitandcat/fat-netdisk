@@ -15,3 +15,10 @@ export const uploadFileList = (data: any, newPath?: string) => {
         data
     })
 }
+
+export const downloadFileList = (name: any) => {
+    return http({
+        method: 'GET',
+        url: `/DownloadFile?fileName=${name}`,
+    })
+}
