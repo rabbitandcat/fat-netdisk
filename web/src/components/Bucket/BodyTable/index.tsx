@@ -80,6 +80,16 @@ const BodyTable: React.FC<PropTypes> = params => {
         }
     ];
 
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+        // getCheckboxProps: (record: DataType) => ({
+        //   disabled: record.name === 'Disabled User', // Column configuration not to be checked
+        //   name: record.name,
+        // }),
+      };
+
     return (
         <div className="file-wrapper-table">
             <Table
@@ -88,6 +98,7 @@ const BodyTable: React.FC<PropTypes> = params => {
                 dataSource={params.items}
                 childrenColumnName="never"
                 showSorterTooltip={false}
+                rowSelection={rowSelection}
                 scroll={{ y: 800 }}
                 columns={columns}
                 pagination={false}
