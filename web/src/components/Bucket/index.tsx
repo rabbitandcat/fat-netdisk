@@ -4,7 +4,7 @@ import HeaderButtonGroup from './HeaderButtonGroup'
 import HeaderToolbar from './HeaderToolbar'
 import BodyTable from './BodyTable'
 import BodyGrid from './BodyGrid'
-import { Layout } from '../../lib/enums'
+import { KeyCode, Layout } from '../../lib/enums'
 import { Item } from '../../lib/vdir/types'
 import shortid from 'shortid'
 import Empty from './Empty'
@@ -14,6 +14,7 @@ import VFolder from '../../lib/vdir/VFolder'
 import VFile from '../../lib/vdir/VFile'
 import { message, Spin } from 'antd'
 import useSelection from '../../hooks/useSelection'
+import useKeyPress from '../../hooks/useKeyPress'
 
 
 const Bucket: React.FC = () => {
@@ -21,6 +22,7 @@ const Bucket: React.FC = () => {
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
     const [loading, setLoading] = useState<boolean>(false);
+    const keypress = useKeyPress(KeyCode.Escape);
     const selection = useSelection(items)
 
 
@@ -153,6 +155,10 @@ const Bucket: React.FC = () => {
     }
 
 
+
+    useEffect(() => {
+        if (keypress) selection.clear();
+      }, [keypress]);
     
 
     useEffect(() => {
