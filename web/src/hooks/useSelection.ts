@@ -37,8 +37,9 @@ const useSelection = (items: Item[]) => {
     console.log('selectionMove');
     if ((oe as any).button !== 2) {
       added.forEach(el => {
-        const rowKey = el.getAttribute("data-row-key") || "";
-        setFileNames(f => f.concat(rowKey));
+        console.log(el.getAttribute("data-row-key"));
+        const rowKey = el.getAttribute("data-row-key") || "";        
+        setFileNames(f => f.concat(rowKey))
         el.classList.add("selected");
       });
       removed.forEach(el => {
@@ -53,7 +54,7 @@ const useSelection = (items: Item[]) => {
     }
   };
   const selectionStop = () => {
-    selection.keepSelection();
+    selection.keepSelection();   
     console.log('selectionStop');
     
   };
@@ -69,7 +70,12 @@ const useSelection = (items: Item[]) => {
       selection.off("stop", selectionStop);
     };
   }, []);
-  return { fileNames, selectAll, clear };
+
+  useEffect(() => {
+    console.log(fileNames);
+  }, [fileNames])
+
+  return { fileNames, setFileNames, selectAll, clear };
 };
 
 export default useSelection;

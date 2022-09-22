@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@simonwep/selection-js": "^1.7.1",
     "@types/shortid": "^0.0.29",
     "antd": "^4.23.1",
     "axios": "^0.27.2",

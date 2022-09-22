@@ -16,9 +16,13 @@ export const uploadFileList = (data: any, newPath?: string) => {
     })
 }
 
-export const downloadFileList = (name: any) => {
+export const downloadFileList = (fileNameList: string[], prefix: string) => {
     return http({
-        method: 'GET',
-        url: `/DownloadFile?fileName=${name}`,
+        method: 'POST',
+        url: '/DownloadFile',
+        data: {
+            fileNameList,
+            prefix
+        }
     })
 }

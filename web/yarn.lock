@@ -336,6 +336,11 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.0.0.tgz#a2189335a5f6428aa904ccc291988567018b6e01"
   integrity sha512-SCR1cxRSMNKjaVYptCzBApPDqGwa3FGdjVHc+rOToocNPHQdIYLZBfv/3f+KvYuXDkUGVIW9IAzmPNZDRL1I4A==
 
+"@simonwep/selection-js@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@simonwep/selection-js/-/selection-js-1.7.1.tgz#bbee77c3914bd8b226294275c0ff96821230e3c6"
+  integrity sha512-3UI3SBUuhce53RV9oRExh9hEaaXn0y3vOmgxS294uRMknWfMO1D//ZJ9UqdXmwbMf6s/UMl227jHBuJK4iHMjQ==
+
 "@types/prop-types@*":
   version "15.7.5"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"

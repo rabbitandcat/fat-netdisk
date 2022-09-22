@@ -66,6 +66,7 @@ const Bucket: React.FC = () => {
     }
 
     const displayBucketFiles = (res: any) => {
+        selection.clear()
         const vf = VFolder.from(res.data)
         setVFolder(vf);
         reverseLevelOrder(levelOrder(vf))
@@ -73,6 +74,7 @@ const Bucket: React.FC = () => {
     }
 
     const onRefresh = async () => {
+        selection.clear()
         setLoading(true);
         console.log('onRefresh');
         const res = await getBucketFileList()
@@ -115,22 +117,26 @@ const Bucket: React.FC = () => {
 
 
     const onChangeLayout = async () => {
+        selection.clear()
         const nextLayout = layout === Layout.grid ? Layout.table : Layout.grid;
         setLayout(nextLayout);
     };
 
     const onFolderSelect = (name: string) => {
+        selection.clear()
         vFolder.changeDir(name);
         setItems(vFolder.listFiles());
     }
 
     const backspace = () => {
+        selection.clear()
         vFolder.back();
         setItems(vFolder.listFiles());
     };
 
 
     const jumpTo = (path: string) => {
+        selection.clear()
         vFolder.jumpTo(path);
         setItems(vFolder.listFiles());
     }
@@ -169,6 +175,7 @@ const Bucket: React.FC = () => {
         <div className="main-content">
             <HeaderButtonGroup
                 vFolder={vFolder}
+                selection={selection}
             ></HeaderButtonGroup>
             <HeaderToolbar
                 onRefresh={onRefresh}

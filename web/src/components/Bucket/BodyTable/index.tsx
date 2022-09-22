@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Space, Input, Breadcrumb, Table } from "antd";
 import { Item } from "../../../lib/vdir/types";
 import Icon from "../../../components/IconFont";
@@ -25,6 +25,8 @@ type PropTypes = {
 }
 
 const BodyTable: React.FC<PropTypes> = params => {
+
+    const [prefix, setPrefix] = useState<string>("");
 
     const columns: any = [
         {
@@ -84,11 +86,18 @@ const BodyTable: React.FC<PropTypes> = params => {
 
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-          console.log('当前目录', params.vFolder.navigator[params.vFolder.navigator.length - 1]);
-          params.selection
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            console.log('当前目录', params.vFolder.navigator);
+            if (params.vFolder.navigator) {
+                setPrefix(params.vFolder.navigator.join('/'))
+            }
+            //   params.selection.setFileName(selectedRows[0].name);
         },
-      };
+    };
+
+    useEffect(() => {
+        console.log('prefix', prefix);
+    }, [])
 
     return (
         <div className="file-wrapper-table">
@@ -104,13 +113,13 @@ const BodyTable: React.FC<PropTypes> = params => {
                 pagination={false}
                 onRow={record => {
                     return {
-                      onDoubleClick(event: any) {
-                        if (record instanceof VFolder && event.target.tagName !== "INPUT") {
-                          params.onFolderSelect(record.name);
-                        }
-                      },
+                        onDoubleClick(event: any) {
+                            if (record instanceof VFolder && event.target.tagName !== "INPUT") {
+                                params.onFolderSelect(record.name);
+                            }
+                        },
                     };
-                  }}
+                }}
             />
         </div>
     )
