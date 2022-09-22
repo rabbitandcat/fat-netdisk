@@ -50,3 +50,13 @@ func UploadFile(c *gin.Context) {
 		"url":     url,
 	})
 }
+
+func DownloadFile(c *gin.Context) {
+	fileKey := c.Query("fileName")
+	url, code := model.DownloadFile(fileKey)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"message": errmsg.GetErrMsg(code),
+		"url":     url,
+	})
+}

@@ -106,6 +106,13 @@ func UpLoadFile(file multipart.File, fileSize int64, fileName string, filePath s
 	return url, errmsg.SUCCESS
 }
 
+func DownloadFile(key string) (string, int) {
+	domain := ImgUrl
+	publicAccessURL := storage.MakePublicURL(domain, key)
+	fmt.Println(publicAccessURL)
+	return publicAccessURL, errmsg.SUCCESS
+}
+
 func ItemAdapter(item storage.ListItem) VFile {
 	var file VFile
 	file.WebkitRelativePath = item.Key
