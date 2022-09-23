@@ -37,13 +37,25 @@ const useSelection = (items: Item[]) => {
     console.log('selectionMove');
     if ((oe as any).button !== 2) {
       added.forEach(el => {
-        console.log(el.getAttribute("data-row-key"));
+        let node: any = el.children[0].children[0]
+        if(!node.classList.contains('ant-checkbox-wrapper-checked') && node.tagName !== 'LABEL'){
+         
+          node.click()
+        }
         const rowKey = el.getAttribute("data-row-key") || el.children[1].innerHTML || "";        
-        setFileNames(f => f.concat(rowKey))
-        el.classList.add("selected");                
+        setFileNames(f => {
+          if (!f.includes(rowKey)) {
+            return [...f, rowKey];
+          }
+          return f;
+        })
+        el.classList.add('children',"selected");                
       });
       removed.forEach(el => {
-        
+        let node: any = el.children[0].children[0]
+        if(node.classList.contains('ant-checkbox-wrapper-checked') && node.tagName !== 'LABEL'){
+          node.click()
+        }
         const rowKey = el.getAttribute("data-row-key") || el.children[1].innerHTML || "";
         setFileNames(f => {
           const index = f.findIndex(i => i === rowKey);

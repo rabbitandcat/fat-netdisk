@@ -85,11 +85,11 @@ const Bucket: React.FC = () => {
     const _getFiles = (itemArr: any[]) => {
         let files: VFile[] = [];
         itemArr.forEach(item => {
-          if (item instanceof VFile) {
-            files.push(item);
-          } else {
-            files = [...files, ..._getFiles([...item.getItems()])];
-          }
+            if (item instanceof VFile) {
+                files.push(item);
+            } else {
+                files = [...files, ..._getFiles([...item.getItems()])];
+            }
         });
         return files
     }
@@ -98,22 +98,22 @@ const Bucket: React.FC = () => {
         // 开始获取选中文件数量
         let files: VFile[] = [];
         if (selection.fileNames.length > 0) {
-          // 如果选中区域有文件的话，那么下载选中区域的文件
-          const itemsArr: Item[] = [];
-          selection.fileNames.forEach(fileId => {
-            const item = vFolder.getItem(fileId);
-            if (item) itemsArr.push(item);
-          });
-          files = _getFiles(itemsArr);
+            // 如果选中区域有文件的话，那么下载选中区域的文件
+            const itemsArr: Item[] = [];
+            selection.fileNames.forEach(fileId => {
+                const item = vFolder.getItem(fileId);
+                if (item) itemsArr.push(item);
+            });
+            files = _getFiles(itemsArr);
         }
-    
+
         if (files.length <= 0 && opItem) {
-          // 如果选中区域没有文件，那么直接下载当前上下文中的区域
-          files = _getFiles([opItem]);
+            // 如果选中区域没有文件，那么直接下载当前上下文中的区域
+            files = _getFiles([opItem]);
         }
-    
+
         return files;
-      };
+    };
 
 
     const onChangeLayout = async () => {
@@ -166,8 +166,8 @@ const Bucket: React.FC = () => {
 
     useEffect(() => {
         if (keypress) selection.clear();
-      }, [keypress]);
-    
+    }, [keypress]);
+
 
     useEffect(() => {
         onRefresh()
@@ -187,7 +187,10 @@ const Bucket: React.FC = () => {
                 backspace={backspace}
                 jumpTo={jumpTo}
             ></HeaderToolbar>
-            <Spin spinning={loading} wrapperClassName="loading-wrapper">
+            <Spin
+                spinning={loading}
+                wrapperClassName="loading-wrapper"
+            >
                 {renderMainLayout()}
             </Spin>
         </div>

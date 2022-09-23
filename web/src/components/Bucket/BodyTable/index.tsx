@@ -97,7 +97,8 @@ const BodyTable: React.FC<PropTypes> = params => {
     }, [])
 
     return (
-        <div className="file-wrapper-table">
+        <div className="file-wrapper-table"
+            >
             <Table
                 rowKey="name"
                 size="small"
