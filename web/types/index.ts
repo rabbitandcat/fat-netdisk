@@ -1,4 +1,4 @@
-import { VFile } from "types/common";
+import { VFile } from "./common";
 
 export class BucketMeta {
   name = "";
