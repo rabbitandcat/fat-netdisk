@@ -26,3 +26,14 @@ export const downloadFileList = (fileNameList: string[], prefix: string) => {
         }
     })
 }
+
+export const deleteFileList = (fileNameList: string[], prefix: string) => {
+    return http({
+        method: 'DELETE',
+        url: '/DeleteFile',
+        data: {
+            fileNameList,
+            prefix
+        }
+    })
+}
