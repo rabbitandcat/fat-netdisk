@@ -1,4 +1,4 @@
-![logo](../logo.png)
+![logo](./web/src/assets/images/logo.png)
 
 <h1>肥兔网盘</h1>
 
@@ -29,7 +29,7 @@
 
 # 💎演示
 
-![bandicam 2022-09-23 22-39-28-663](C:\Users\23658\Desktop\bandicam 2022-09-23 22-39-28-663.gif)
+![bandicam 2022-09-23 22-39-28-663](./web/src/assets/images/demo.gif)
 
 # 🎈License
 
