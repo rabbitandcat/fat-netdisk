@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import shortid from "shortid";
 
 import { Item } from "../../../lib/vdir/types";
@@ -9,6 +9,8 @@ import IconFont from "../../IconFont";
 type PropTypes = {
     items: Item[],
     onFolderSelect: (name: string) => void,
+    selection: any
+    vFolder: VFolder
 }
 
 const sorter = (a: Item, b: Item) => {
@@ -22,6 +24,9 @@ const sorter = (a: Item, b: Item) => {
 }
 
 const BodyGrid: React.FC<PropTypes> = params => {
+
+    const [prefix, setPrefix] = useState<string>("");
+
 
     const renderVFile = (item: VFile) => {
             return (
@@ -56,6 +61,12 @@ const BodyGrid: React.FC<PropTypes> = params => {
     const renderItem = (item: Item) => {
         return item instanceof VFile ? renderVFile(item) : renderVFolder(item);
     };
+
+    useEffect(() => {
+        setPrefix(params.vFolder.navigator.join('/'))
+        console.log('grid的当前路径',params.vFolder.navigator);
+        
+    }, [params.items])
 
 
     return (

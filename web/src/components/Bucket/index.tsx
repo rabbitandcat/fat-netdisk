@@ -149,6 +149,8 @@ const Bucket: React.FC = () => {
             <BodyGrid
                 items={items}
                 onFolderSelect={onFolderSelect}
+                selection={selection}
+                vFolder={vFolder}
             ></BodyGrid>
         ) : (
             <BodyTable

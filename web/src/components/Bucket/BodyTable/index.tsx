@@ -86,12 +86,9 @@ const BodyTable: React.FC<PropTypes> = params => {
 
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            console.log('当前目录', params.vFolder.navigator);
             if (params.vFolder.navigator) {
                 setPrefix(params.vFolder.navigator.join('/'))
             }
-            //   params.selection.setFileName(selectedRows[0].name);
         },
     };
 
