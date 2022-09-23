@@ -27,22 +27,17 @@ const useSelection = (items: Item[]) => {
   };
 
   const selectionStart = () => {
-    console.log('selectionStart');
+    // console.log('selectionStart');
     
   };
   const selectionMove = ({
     changed: { removed, added },
     oe
   }: SelectionEvent) => {
-    console.log('selectionMove');
+    // console.log('selectionMove');
     if ((oe as any).button !== 2) {
       added.forEach(el => {
-        let node: any = el.children[0].children[0]
-        if(!node.classList.contains('ant-checkbox-wrapper-checked') && node.tagName !== 'LABEL'){
-         
-          node.click()
-        }
-        const rowKey = el.getAttribute("data-row-key") || el.children[1].innerHTML || "";        
+        const rowKey = el.getAttribute("data-row-key") || el.children[1].innerHTML || "";           
         setFileNames(f => {
           if (!f.includes(rowKey)) {
             return [...f, rowKey];
@@ -52,10 +47,6 @@ const useSelection = (items: Item[]) => {
         el.classList.add('children',"selected");                
       });
       removed.forEach(el => {
-        let node: any = el.children[0].children[0]
-        if(node.classList.contains('ant-checkbox-wrapper-checked') && node.tagName !== 'LABEL'){
-          node.click()
-        }
         const rowKey = el.getAttribute("data-row-key") || el.children[1].innerHTML || "";
         setFileNames(f => {
           const index = f.findIndex(i => i === rowKey);
@@ -68,7 +59,7 @@ const useSelection = (items: Item[]) => {
   };
   const selectionStop = () => {
     selection.keepSelection();   
-    console.log('selectionStop');
+    // console.log('selectionStop');
     
   };
 
