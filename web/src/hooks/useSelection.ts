@@ -5,7 +5,7 @@ import { Item } from "../lib/vdir/types";
 const selection = Selection.create({
   class: "selection",
   selectables: [".file-cell-grid-inner", ".ant-table-row"],
-  boundaries: [".file-wrapper-table"],
+  boundaries: [".file-wrapper-table",".file-wrapper-grid"],
   startThreshold: 10,
   disableTouch: true,
   singleClick: true
@@ -37,13 +37,26 @@ const useSelection = (items: Item[]) => {
     console.log('selectionMove');
     if ((oe as any).button !== 2) {
       added.forEach(el => {
-        console.log(el.getAttribute("data-row-key"));
-        const rowKey = el.getAttribute("data-row-key") || "";        
-        setFileNames(f => f.concat(rowKey))
-        el.classList.add("selected");
+        let node: any = el.children[0].children[0]
+        if(!node.classList.contains('ant-checkbox-wrapper-checked') && node.tagName !== 'LABEL'){
+         
+          node.click()
+        }
+        const rowKey = el.getAttribute("data-row-key") || el.children[1].innerHTML || "";        
+        setFileNames(f => {
+          if (!f.includes(rowKey)) {
+            return [...f, rowKey];
+          }
+          return f;
+        })
+        el.classList.add('children',"selected");                
       });
       removed.forEach(el => {
-        const rowKey = el.getAttribute("data-row-key") || "";
+        let node: any = el.children[0].children[0]
+        if(node.classList.contains('ant-checkbox-wrapper-checked') && node.tagName !== 'LABEL'){
+          node.click()
+        }
+        const rowKey = el.getAttribute("data-row-key") || el.children[1].innerHTML || "";
         setFileNames(f => {
           const index = f.findIndex(i => i === rowKey);
           f.splice(index, 1);
