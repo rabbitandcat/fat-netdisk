@@ -2,7 +2,7 @@
 <img src="./web/src/assets/images/logo.png">
 </div>
 
-![GitHub](https://img.shields.io/github/license/rabbitandcat/fat-netdisk) ![GitHub last commit](https://img.shields.io/github/last-commit/rabbitandcat/fat-netdisk)![GitHub Release Date](https://img.shields.io/github/release-date/rabbitandcat/fat-netdisk)
+![GitHub](https://img.shields.io/github/license/rabbitandcat/fat-netdisk) ![GitHub last commit](https://img.shields.io/github/last-commit/rabbitandcat/fat-netdisk)![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/rabbitandcat/fat-netdisk)
 
 <h1>肥兔网盘</h1>
 
