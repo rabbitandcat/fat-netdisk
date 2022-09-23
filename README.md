@@ -8,6 +8,8 @@
 
 肥兔网盘是一个网页端文件管理器，主要使用 TypeScript 和 Golang 编写
 
+ 简体中文 | [English](./README-en.md)
+
 **关于排版**
 
 项目内容按照 [中文文案排版指北](http://mazhuang.org/wiki/chinese-copywriting-guidelines/) 进行排版，以保证内容的可读性。
@@ -37,4 +39,4 @@
 
 # 🎈License
 
-FAT-NETDISK 使用 [MIT License](https://github.com/rabbitandcat/fat-netdisk/blob/master/LICENSE).
+Fat-NetDisk 使用 [MIT License](https://github.com/rabbitandcat/fat-netdisk/blob/master/LICENSE).
