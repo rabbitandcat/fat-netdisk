@@ -14,6 +14,11 @@ type DownloadInfo struct {
 	Prefix       string   `json:"prefix"`
 }
 
+type DeleteInfo struct {
+	FileNamelist []string `json:"fileNameList"`
+	Prefix       string   `json:"prefix"`
+}
+
 var filePath string
 
 func GetBucketFileList(c *gin.Context) {
@@ -59,11 +64,21 @@ func UploadFile(c *gin.Context) {
 func DownloadFile(c *gin.Context) {
 	var data DownloadInfo
 	_ = c.ShouldBindJSON(&data)
-	fmt.Println("data是", data)
 	urlList, code := model.DownloadFile(data.FileNamelist, data.Prefix)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,
 		"message": errmsg.GetErrMsg(code),
 		"urlList": urlList,
+	})
+}
+
+func DeleteFile(c *gin.Context) {
+	var data DeleteInfo
+	_ = c.ShouldBindJSON(&data)
+	fmt.Println("data是", data)
+	code := model.DeleteFile(data.FileNamelist, data.Prefix)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"message": errmsg.GetErrMsg(code),
 	})
 }

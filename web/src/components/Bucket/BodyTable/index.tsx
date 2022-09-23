@@ -85,12 +85,16 @@ const BodyTable: React.FC<PropTypes> = params => {
     ];
 
     const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
+        selectedRowKeys: params.selection.fileNames,
+        onChange: (selectedRowKeys: React.Key[], selectedRows: any) => {
+            console.log('selectedRowKeys', selectedRowKeys);
+            console.log('selectedRows', selectedRows);
             if (params.vFolder.navigator) {
                 setPrefix(params.vFolder.navigator.join('/'))
             }
         },
     };
+
 
     useEffect(() => {
         console.log('prefix', prefix);
@@ -98,6 +102,11 @@ const BodyTable: React.FC<PropTypes> = params => {
 
     return (
         <div className="file-wrapper-table"
+                onMouseDown={(e: any) => {
+                    if(e.target.className === 'ant-table-wrapper') {
+                        params.selection.clear()
+                    }
+                }}
             >
             <Table
                 rowKey="name"

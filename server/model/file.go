@@ -6,6 +6,7 @@ import (
 	"fat-netdisk/utils/errmsg"
 	"fmt"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
+	"github.com/qiniu/go-sdk/v7/sms/rpc"
 	"github.com/qiniu/go-sdk/v7/storage"
 	"mime/multipart"
 	"strings"
@@ -115,6 +116,47 @@ func DownloadFile(fileNameList []string, prefix string) ([]string, int) {
 	}
 	fmt.Println(urlList)
 	return urlList, errmsg.SUCCESS
+}
+
+func DeleteFile(fileNameList []string, prefix string) int {
+	mac := qbox.NewMac(AccessKey, SecretKey)
+	cfg := storage.Config{
+		// 是否使用https域名进行资源管理
+		UseHTTPS: false,
+	}
+	bucketManager := storage.NewBucketManager(mac, &cfg)
+
+	//domain := utils.QiniuSever
+	deleteOps := make([]string, 0, len(fileNameList))
+	for _, fileName := range fileNameList {
+		fmt.Println(fileName)
+		deleteOps = append(deleteOps, storage.URIDelete("fat-netdisk", prefix+"/"+fileName))
+	}
+	fmt.Println("deleteOps", deleteOps)
+	rets, err := bucketManager.Batch(deleteOps)
+	if err != nil {
+		// 遇到错误
+		if _, ok := err.(*rpc.ErrorInfo); ok {
+			for _, ret := range rets {
+				// 200 为成功
+				fmt.Printf("%d\n", ret.Code)
+				if ret.Code != 200 {
+					fmt.Printf("%s\n", ret.Data.Error)
+					return errmsg.ERROR
+				}
+			}
+		} else {
+			fmt.Printf("batch error, %s", err)
+			return errmsg.ERROR
+		}
+	} else {
+		// 完全成功
+		for _, ret := range rets {
+			// 200 为成功
+			fmt.Printf("%d\n", ret.Code)
+		}
+	}
+	return errmsg.SUCCESS
 }
 
 func ItemAdapter(item storage.ListItem) VFile {

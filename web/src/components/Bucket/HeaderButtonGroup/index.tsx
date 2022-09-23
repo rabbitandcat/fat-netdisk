@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Space, Input, Breadcrumb, Table, Upload, UploadProps, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { downloadFileList, uploadFileList } from '../../../api/bucket';
+import { deleteFileList, downloadFileList, uploadFileList } from '../../../api/bucket';
 import VFolder from '../../../lib/vdir/VFolder'
 
 type PropTypes = {
@@ -40,6 +40,18 @@ const HeaderButtonGroup: React.FC<PropTypes> = params => {
         }
     }
 
+    const handleDelete = async () => {
+        let fileNameList = params.selection.fileNames
+        let prefix = params.vFolder.navigator.join('/')
+        try {
+            const res: any = await deleteFileList(fileNameList, prefix)
+            console.log('res', res);
+        } catch (error) {
+            console.log(error);
+            message.error("删除失败")
+        }
+    }
+
     const props: UploadProps = {
         showUploadList: false,
         beforeUpload: async (file) => {
@@ -68,7 +80,7 @@ const HeaderButtonGroup: React.FC<PropTypes> = params => {
                 <Button size="middle"><UploadOutlined />上传文件</Button>
             </Upload>
             <Button size="middle" onClick={handleDownload}>下载</Button>
-            <Button size="middle">删除</Button>
+            <Button size="middle" onClick={handleDelete}>删除</Button>
         </Space>
     )
 }

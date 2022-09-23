@@ -73,6 +73,11 @@ const BodyGrid: React.FC<PropTypes> = params => {
         <div
             className="file-wrapper-grid"
             role="presentation"
+            onMouseDown={(e: any) => {
+                if(e.target.className === 'file-wrapper-grid') {
+                    params.selection.clear()
+                }
+            }}
         >
             {params.items.sort(sorter).map(renderItem)}
         </div>
