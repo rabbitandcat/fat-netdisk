@@ -1,5 +1,7 @@
 ![logo](./web/src/assets/images/logo.png)
 
+https://img.shields.io/github/license/rabbitandcat/fat-netdisk| https://img.shields.io/github/last-commit/rabbitandcat/fat-netdisk | https://img.shields.io/github/release-date/rabbitandcat/fat-netdisk
+
 <h1>肥兔网盘</h1>
 
 肥兔网盘是一个网页端文件管理器，主要使用 TypeScript 和 Golang 编写
@@ -33,6 +35,4 @@
 
 # 🎈License
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://camo.githubusercontent.com/0e75e86523f89adbaa859739fae1d7adc49d2638/68747470733a2f2f692e6372656174697665636f6d6d6f6e732e6f72672f6c2f62792d6e632d73612f332e302f636e2f38387833312e706e67" /></a>
-
-本作品采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/">知识共享署名-非商业性使用-相同方式共享 3.0 中国大陆许可协议</a> 进行许可。
+FAT-NETDISK 使用 [MIT License](https://github.com/rabbitandcat/fat-netdisk/blob/master/LICENSE).
