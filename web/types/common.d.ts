@@ -28,7 +28,7 @@ declare type Task<T> = {
 };
 
 declare type TransferStore = {
-  id: string;
+  id: number;
   name: string;
   size: number;
   date: number;

@@ -48,6 +48,9 @@ const Bucket: React.FC<PropsType> = (params) => {
 
     let setTransfersList = params.setTransfers
 
+    let transfersList = params.transfers
+
+
     const levelOrder = (root: VFolder) => {
         // 层序遍历，得到所有文件夹
         let res: any[] = []
@@ -156,19 +159,18 @@ const Bucket: React.FC<PropsType> = (params) => {
         try {
             const res: any = await downloadFileList(fileNameList, prefix)
             const urlList = res.urlList
-            let transferList: any = []
 
             urlList.forEach(async (myURL: string, index: number) => {
-                transferList.push({
+                transfersList.push({
                     id: index,
                     name: fileNameList[index],
                     size: 0,
                     date: 0,
                     type: TaskType.download,
                     status: TransferStatus.default,
-                    progress: 0
+                    progress: 100
                 })
-                let res: any = await downloadSingleFile(myURL, index, setTransfersList, transferList)
+                let res: any = await downloadSingleFile(myURL, index, setTransfersList, transfersList)
 
                 const a = document.createElement('a');
                 a.style.display = 'none';
