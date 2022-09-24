@@ -10,10 +10,12 @@ import TheSidebar from '../../components/TheSidebar';
 import Bucket from '../../components/Bucket';
 import TransferList from '../../components/TransferList';
 import TransferDone from '../../components/TransferDone';
+import useTransfers from '../../hooks/useTransfers';
 
 
 const MainPage: React.FC = () => {
     const  [activePage, setActivePage] = useState<Page>(Page.bucket)
+    const transferList = useTransfers()
 
     const tabChange = async (page: Page) => {
         try {
@@ -27,11 +29,11 @@ const MainPage: React.FC = () => {
     const renderPage = (page: Page) => {
         switch (page) {
             case Page.bucket:
-                return <Bucket />;
+                return <Bucket/>;
             case Page.transferDone:
                 return <TransferDone />
             case Page.transferList:
-                return <TransferList />
+                return <TransferList/>
         }
     }
 
