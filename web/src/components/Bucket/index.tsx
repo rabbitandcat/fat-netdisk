@@ -4,7 +4,7 @@ import HeaderButtonGroup from './HeaderButtonGroup'
 import HeaderToolbar from './HeaderToolbar'
 import BodyTable from './BodyTable'
 import BodyGrid from './BodyGrid'
-import { KeyCode, Layout, TaskType, TransferStatus } from '../../lib/enums'
+import { KeyCode, Layout, TaskType } from '../../lib/enums'
 import { Item } from '../../lib/vdir/types'
 import shortid from 'shortid'
 import Empty from './Empty'
@@ -15,11 +15,30 @@ import VFile from '../../lib/vdir/VFile'
 import { message, Spin } from 'antd'
 import useSelection from '../../hooks/useSelection'
 import useKeyPress from '../../hooks/useKeyPress'
-import useTransfers from '../../hooks/useTransfers'
+import { TransferStore } from '../../../types/common'
+
+type ProgressListType = {
+    id: string;
+    progress: number;
+}
+interface TransferStoreWithProgress extends TransferStore {
+    progress: number
+}
+
+enum TransferStatus {
+    default,
+    done,
+    failed
+}
+
+type PropsType = {
+    transfers: TransferStoreWithProgress[]
+    setTransfers: (transfers: TransferStoreWithProgress[]) => void
+}
 
 
 
-const Bucket: React.FC = (params) => {
+const Bucket: React.FC<PropsType> = (params) => {
     const [vFolder, setVFolder] = useState<VFolder>(new VFolder("Root"));
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
@@ -27,25 +46,7 @@ const Bucket: React.FC = (params) => {
     const keypress = useKeyPress(KeyCode.Escape);
     const selection = useSelection(items)
 
-    let transfersObj = [{
-        id: '1',
-        name: 'name1',
-        size: 0,
-        date: 0,
-        type: TaskType.download,
-        status: TransferStatus.default,
-        progress: 23
-    },
-    {
-        id: '2',
-        name: '4324',
-        size: 0,
-        date: 0,
-        type: TaskType.download,
-        status: TransferStatus.default,
-        progress: 100
-    }]
-
+    let setTransfersList = params.setTransfers
 
     const levelOrder = (root: VFolder) => {
         // 层序遍历，得到所有文件夹
@@ -155,18 +156,25 @@ const Bucket: React.FC = (params) => {
         try {
             const res: any = await downloadFileList(fileNameList, prefix)
             const urlList = res.urlList
-            console.log('urlList', urlList);
+            let transferList: any = []
 
             urlList.forEach(async (myURL: string, index: number) => {
-                let res: any = await downloadSingleFile(myURL, index)
+                transferList.push({
+                    id: index,
+                    name: fileNameList[index],
+                    size: 0,
+                    date: 0,
+                    type: TaskType.download,
+                    status: TransferStatus.default,
+                    progress: 0
+                })
+                let res: any = await downloadSingleFile(myURL, index, setTransfersList, transferList)
+
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = URL.createObjectURL(new Blob([res.data]));
                 // 保存下来的文件名
                 a.download = fileNameList[index];
-                
-
-
                 document.body.appendChild(a);
                 a.click();
                 // 移除元素
