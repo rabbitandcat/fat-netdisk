@@ -1,56 +1,17 @@
 import React from 'react'
 import { Button, Space, Input, Breadcrumb, Table, Upload, UploadProps, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { deleteFileList, downloadFileList, uploadFileList } from '../../../api/bucket';
+import { deleteFileList, downloadFileList, uploadFileList, downloadSingleFile } from '../../../api/bucket';
 import VFolder from '../../../lib/vdir/VFolder'
 
 type PropTypes = {
     vFolder: VFolder
     selection: any
+    handleDownload: () => void
+    handleDelete: () => void
 };
 
 const HeaderButtonGroup: React.FC<PropTypes> = params => {
-
-    const handleDownload = async () => {
-        let fileNameList = params.selection.fileNames
-        let prefix = params.vFolder.navigator.join('/')
-        try {
-            const res: any = await downloadFileList(fileNameList, prefix)
-            const urlList = res.urlList
-            console.log('urlList', urlList);
-
-            urlList.forEach((myURL: string, index: number) => {
-                const url = "http://" + myURL
-                fetch(url).then(async res => await res.blob()).then((blob) => {
-                    // 创建隐藏的可下载链接
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = URL.createObjectURL(blob);
-                    // 保存下来的文件名
-                    a.download = fileNameList[index];
-                    document.body.appendChild(a);
-                    a.click();
-                    // 移除元素
-                    document.body.removeChild(a);
-                })
-            })
-        } catch (error) {
-            console.log(error);
-            message.error("下载失败")
-        }
-    }
-
-    const handleDelete = async () => {
-        let fileNameList = params.selection.fileNames
-        let prefix = params.vFolder.navigator.join('/')
-        try {
-            const res: any = await deleteFileList(fileNameList, prefix)
-            console.log('res', res);
-        } catch (error) {
-            console.log(error);
-            message.error("删除失败")
-        }
-    }
 
     const props: UploadProps = {
         showUploadList: false,
@@ -79,8 +40,8 @@ const HeaderButtonGroup: React.FC<PropTypes> = params => {
             <Upload {...props}>
                 <Button size="middle"><UploadOutlined />上传文件</Button>
             </Upload>
-            <Button size="middle" onClick={handleDownload}>下载</Button>
-            <Button size="middle" onClick={handleDelete}>删除</Button>
+            <Button size="middle" onClick={params.handleDownload}>下载</Button>
+            <Button size="middle" onClick={params.handleDelete}>删除</Button>
         </Space>
     )
 }

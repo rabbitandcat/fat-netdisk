@@ -6,6 +6,9 @@ import { Progress } from "antd";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
 import Empty from '../Bucket/Empty';
 import { TaskType } from '../../lib/enums';
+import useTransfers from '../../hooks/useTransfers';
+
+
 
 type ProgressListType = {
     id: string;
@@ -54,7 +57,7 @@ const TransferList: React.FC = () => {
                     <section className="transfer-table__wrapper">
                         <table className="transfer-table">
                             <tbody>
-                                {transfers.map(item => (
+                                {transfers.map((item: { id: React.Key | null | undefined; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; progress: number | undefined; }) => (
                                     <tr className="transfer-table__row" key={item.id}>
                                         <td className="transfer-table__row_item meta">
                                             <Icon

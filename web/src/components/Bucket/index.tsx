@@ -4,26 +4,47 @@ import HeaderButtonGroup from './HeaderButtonGroup'
 import HeaderToolbar from './HeaderToolbar'
 import BodyTable from './BodyTable'
 import BodyGrid from './BodyGrid'
-import { KeyCode, Layout } from '../../lib/enums'
+import { KeyCode, Layout, TaskType, TransferStatus } from '../../lib/enums'
 import { Item } from '../../lib/vdir/types'
 import shortid from 'shortid'
 import Empty from './Empty'
 
-import { getBucketFileList, uploadFileList } from '../../api/bucket'
+import { deleteFileList, downloadFileList, downloadSingleFile, getBucketFileList, uploadFileList } from '../../api/bucket'
 import VFolder from '../../lib/vdir/VFolder'
 import VFile from '../../lib/vdir/VFile'
 import { message, Spin } from 'antd'
 import useSelection from '../../hooks/useSelection'
 import useKeyPress from '../../hooks/useKeyPress'
+import useTransfers from '../../hooks/useTransfers'
 
 
-const Bucket: React.FC = () => {
+
+const Bucket: React.FC = (params) => {
     const [vFolder, setVFolder] = useState<VFolder>(new VFolder("Root"));
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
     const [loading, setLoading] = useState<boolean>(false);
     const keypress = useKeyPress(KeyCode.Escape);
     const selection = useSelection(items)
+
+    let transfersObj = [{
+        id: '1',
+        name: 'name1',
+        size: 0,
+        date: 0,
+        type: TaskType.download,
+        status: TransferStatus.default,
+        progress: 23
+    },
+    {
+        id: '2',
+        name: '4324',
+        size: 0,
+        date: 0,
+        type: TaskType.download,
+        status: TransferStatus.default,
+        progress: 100
+    }]
 
 
     const levelOrder = (root: VFolder) => {
@@ -128,6 +149,48 @@ const Bucket: React.FC = () => {
         setItems(vFolder.listFiles());
     }
 
+    const handleDownload = async () => {
+        let fileNameList = selection.fileNames
+        let prefix = vFolder.navigator.join('/')
+        try {
+            const res: any = await downloadFileList(fileNameList, prefix)
+            const urlList = res.urlList
+            console.log('urlList', urlList);
+
+            urlList.forEach(async (myURL: string, index: number) => {
+                let res: any = await downloadSingleFile(myURL, index)
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = URL.createObjectURL(new Blob([res.data]));
+                // 保存下来的文件名
+                a.download = fileNameList[index];
+                
+
+
+                document.body.appendChild(a);
+                a.click();
+                // 移除元素
+                document.body.removeChild(a);
+
+            })
+        } catch (error) {
+            console.log(error);
+            message.error("下载失败")
+        }
+    }
+
+    const handleDelete = async () => {
+        let fileNameList = selection.fileNames
+        let prefix = vFolder.navigator.join('/')
+        try {
+            const res: any = await deleteFileList(fileNameList, prefix)
+            console.log('res', res);
+        } catch (error) {
+            console.log(error);
+            message.error("删除失败")
+        }
+    }
+
     const backspace = () => {
         selection.clear()
         vFolder.back();
@@ -178,6 +241,8 @@ const Bucket: React.FC = () => {
             <HeaderButtonGroup
                 vFolder={vFolder}
                 selection={selection}
+                handleDownload={handleDownload}
+                handleDelete={handleDelete}
             ></HeaderButtonGroup>
             <HeaderToolbar
                 onRefresh={onRefresh}
