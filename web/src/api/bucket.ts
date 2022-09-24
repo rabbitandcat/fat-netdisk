@@ -50,7 +50,7 @@ export const deleteFileList = (fileNameList: string[], prefix: string) => {
     })
 }
 
-export const downloadSingleFile = (myURL: string, index: number) => {
+export const downloadSingleFile = (myURL: string, index: number, db: (transfers: any) => void, transferList: any) => {
     return fileHttp({
         method: 'GET',
         url: "http://" + myURL,
@@ -58,7 +58,10 @@ export const downloadSingleFile = (myURL: string, index: number) => {
         headers:{ 'Content-Type': 'application/json; application/octet-stream'},
         onDownloadProgress(progressEvent){
             if(progressEvent.lengthComputable){
-                console.log(progressEvent);      
+                // 改变数组内存指向地址
+                db([...transferList]);
+                transferList[index].progress = (progressEvent.loaded / progressEvent.total * 100).toFixed(2);
+                db([...transferList]);
             }
         },
     })

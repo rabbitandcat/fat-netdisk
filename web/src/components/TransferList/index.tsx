@@ -24,40 +24,24 @@ enum TransferStatus {
     failed
 }
 
-const TransferList: React.FC = () => {
-    const [transfers, setTransfers] = useState<TransferStoreWithProgress[]>([
-        {
-            id: '1',
-            name: 'name1',
-            size: 0,
-            date: 0,
-            type: TaskType.download,
-            status: TransferStatus.default,
-            progress: 23
-        },
-        {
-            id: '2',
-            name: 'name2',
-            size: 0,
-            date: 0,
-            type: TaskType.download,
-            status: TransferStatus.default,
-            progress: 100
-        }
-    ]);
+type PropsType = {
+    transfers: TransferStoreWithProgress[]
+}
+
+const TransferList: React.FC<PropsType> = params => {
 
     return (
         <div className="transfer-list-wrapper">
-            {transfers.length > 0 ? (
+            {params.transfers.length > 0 ? (
                 <>
                     <div className="toolbar">
-                        <span className="toolbar-left">{`总共 ${transfers.length} 项`}</span>
+                        <span className="toolbar-left">{`总共 ${params.transfers.length} 项`}</span>
                         <div className="toolbar-right" />
                     </div>
                     <section className="transfer-table__wrapper">
                         <table className="transfer-table">
                             <tbody>
-                                {transfers.map((item: { id: React.Key | null | undefined; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; progress: number | undefined; }) => (
+                                {params.transfers.map((item: { id: React.Key | null | undefined; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; progress: number | undefined; }) => (
                                     <tr className="transfer-table__row" key={item.id}>
                                         <td className="transfer-table__row_item meta">
                                             <Icon
