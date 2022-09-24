@@ -43,12 +43,31 @@ const Bucket: React.FC<PropsType> = (params) => {
     const [items, setItems] = useState<Item[]>([])
     const [layout, setLayout] = useState<Layout>(Layout.grid);
     const [loading, setLoading] = useState<boolean>(false);
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [searchedItem, setSearchedItem] = useState<Item[]>([]);
+
+
     const keypress = useKeyPress(KeyCode.Escape);
     const selection = useSelection(items)
 
     let setTransfersList = params.setTransfers
 
     let transfersList = params.transfers
+
+
+    const search = (root: VFolder, value: string) => {
+        let result: Item[] = [];
+        root.children.forEach(item => {
+            if (item instanceof VFolder) {
+                result = result.concat(search(item, value))
+            } else {
+                if (item.name.includes(value)) {
+                    result.push(item)
+                }
+            }
+        })
+        return result;
+    }
 
 
     const levelOrder = (root: VFolder) => {
@@ -153,6 +172,14 @@ const Bucket: React.FC<PropsType> = (params) => {
         setItems(vFolder.listFiles());
     }
 
+    const onSearchChange = (value: string) => {
+        selection.clear();
+        setSearchValue(value);        
+        let res = search(vFolder, value)
+        setSearchedItem(res)
+        
+    };
+
     const handleDownload = async () => {
         let fileNameList = selection.fileNames
         let prefix = vFolder.navigator.join('/')
@@ -220,16 +247,16 @@ const Bucket: React.FC<PropsType> = (params) => {
         }
         return layout === Layout.table ? (
             <BodyGrid
-                items={items}
+                items={searchValue ? searchedItem : items}
                 onFolderSelect={onFolderSelect}
                 selection={selection}
                 vFolder={vFolder}
             ></BodyGrid>
         ) : (
             <BodyTable
+                items={searchValue ? searchedItem : items}
                 selection={selection}
                 onFolderSelect={onFolderSelect}
-                items={items}
                 vFolder={vFolder}
             ></BodyTable>
         )
@@ -261,6 +288,7 @@ const Bucket: React.FC<PropsType> = (params) => {
                 navigators={vFolder.getNav()}
                 backspace={backspace}
                 jumpTo={jumpTo}
+                onSearchChange={onSearchChange}
             ></HeaderToolbar>
             <Spin
                 spinning={loading}

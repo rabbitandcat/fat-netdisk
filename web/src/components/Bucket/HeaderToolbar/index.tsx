@@ -17,6 +17,7 @@ type PropTypes = {
     navigators: string[],
     backspace: () => void;
     jumpTo: (path: string) => void;
+    onSearchChange: (value: string) => void;
 }
 
 const HeaderTollbar: React.FC<PropTypes> = params => {
@@ -54,6 +55,7 @@ const HeaderTollbar: React.FC<PropTypes> = params => {
                     size="small"
                     prefix={<img src={SearchIcon} alt="" />}
                     placeholder="搜索"
+                    onChange={event => params.onSearchChange(event.target.value)}
                 />
                 {params.layout === Layout.table ? (
                     <Button size="small" onClick={params.onChangeLayout}
