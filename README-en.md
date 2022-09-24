@@ -32,7 +32,7 @@ Fat-NetDisk is a web-based file manager, written mainly in TypeScript and Golang
 
 # 💎Demo
 
-![bandicam 2022-09-23 22-39-28-663](C:/Users/23658/Desktop/fat-netdisk/web/src/assets/images/demo.gif)
+![demo1](./web/src/assets/images/demo.gif)
 
 # 🎈License
 

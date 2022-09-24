@@ -32,10 +32,15 @@
 * [ ] 传输完成页面
 * [ ] 多文件上传及文件夹下载
 * [ ] 用户模块（登录注册、jwt鉴权、token定时更新）
+* [ ] 滑块形态的登陆注册验证方式
+* [ ] 批量快速复制文件
+* [ ] 预览视频的雪碧图
+* [ ] 大体积文件上传
+* [ ] 使用 Tauri 重构为桌面端应用
 
 # 💎演示
 
-![bandicam 2022-09-23 22-39-28-663](./web/src/assets/images/demo.gif)
+![demo1](./web/src/assets/images/demo.gif)
 
 # 🎈License
 
