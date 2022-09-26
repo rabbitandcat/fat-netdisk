@@ -1,15 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-interface IProps {
+interface PropsType {
     url?: string
 }
 
-const defualtProps: IProps = {}
-
-const PdfViewer: React.FC<IProps> = (props) => {
-    return <embed src={props.url} type="application/pdf" height="100%" width="100%"></embed>
+const ImageViewer: React.FC<PropsType> = (params) => {    
+    return <embed src={"http://" + params.url} className="pdf-viewer" type="application/pdf" />
 }
 
-PdfViewer.defaultProps = defualtProps
 
-export default PdfViewer
+export default ImageViewer

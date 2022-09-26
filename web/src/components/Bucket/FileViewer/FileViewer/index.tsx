@@ -18,14 +18,18 @@ const FileViewer: React.FC<PropsType> = (params) => {
         switch (openType) {
             case "image/jpeg":
                 console.log('显示图片');
-                
+
                 return <ImageViewer
                     url={params.openUrl}
                 />
             case "application/pdf":
-                return <PdfViewer />
+                return <PdfViewer 
+                    url={params.openUrl}
+                />
             case "video/mp4":
-                return <VideoViewer />
+                return <VideoViewer
+                    url={params.openUrl}
+                />
             default:
                 return null
         }
