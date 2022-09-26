@@ -14,6 +14,7 @@ Fat-NetDisk is a web-based file manager, written mainly in TypeScript and Golang
 # 🎉Features
 
 * [x] Grid view and list view support
+* [x] Connect to 7Niu cloud for file storage and download
 * [x] Multi-file download and deletion
 * [x] Accurate display and sorting of file and folder sizes and modification dates
 * [x] Drag-and-drop selection in both list view and grid view
