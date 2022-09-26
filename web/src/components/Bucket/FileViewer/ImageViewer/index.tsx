@@ -5,7 +5,9 @@ interface PropsType {
 }
 
 const ImageViewer: React.FC<PropsType> = (params) => {
-    return <img src={params.url} className="imageViewer" />
+    console.log('图片预览器',params.url);
+    
+    return <img src={"http://" + params.url} className="imageViewer" />
 }
 
 

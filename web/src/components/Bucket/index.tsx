@@ -48,6 +48,7 @@ const Bucket: React.FC<PropsType> = (params) => {
     const [searchedItem, setSearchedItem] = useState<Item[]>([]);
     const [viewerVisible, setViewerVisible] = useState<boolean>(false);
     const [openType, setOpenType] = useState<string>("");
+    const [openUrl, setOpenUrl] = useState<string>("");
 
 
     const keypress = useKeyPress(KeyCode.Escape);
@@ -175,20 +176,28 @@ const Bucket: React.FC<PropsType> = (params) => {
         setItems(vFolder.listFiles());
     }
 
-    const onFileSelect = (item: any) => {
+    const onFileSelect = async (item: any) => {
         console.log('onFileSelect');
         selection.clear()
         setViewerVisible(true);
         setOpenType(item.type)
-      
+        try {
+            let fileNameList = [item.name]
+            let prefix = vFolder.navigator.join('/')
+            const res: any = await downloadFileList(fileNameList, prefix)
+            const urlList = res.urlList
+            setOpenUrl(urlList[0])
+        } catch (error: any) {
+            message.error(error.message)
+        }
     }
 
     const onSearchChange = (value: string) => {
         selection.clear();
-        setSearchValue(value);        
+        setSearchValue(value);
         let res = search(vFolder, value)
         setSearchedItem(res)
-        
+
     };
 
     const handleDownload = async () => {
@@ -312,6 +321,7 @@ const Bucket: React.FC<PropsType> = (params) => {
                 visible={viewerVisible}
                 setVisible={setViewerVisible}
                 openType={openType}
+                openUrl={openUrl}
             />
         </div>
     )

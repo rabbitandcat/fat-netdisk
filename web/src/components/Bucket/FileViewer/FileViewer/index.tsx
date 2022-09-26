@@ -9,6 +9,7 @@ type PropsType = {
     visible: boolean
     setVisible: (visible: boolean) => void
     openType: string
+    openUrl: string
 }
 
 const FileViewer: React.FC<PropsType> = (params) => {
@@ -19,7 +20,7 @@ const FileViewer: React.FC<PropsType> = (params) => {
                 console.log('显示图片');
                 
                 return <ImageViewer
-                    url="https://www.w3schools.com/w3css/img_lights.jpg"
+                    url={params.openUrl}
                 />
             case "application/pdf":
                 return <PdfViewer />
