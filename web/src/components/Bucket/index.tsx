@@ -16,6 +16,7 @@ import { message, Spin } from 'antd'
 import useSelection from '../../hooks/useSelection'
 import useKeyPress from '../../hooks/useKeyPress'
 import { TransferStore } from '../../../types/common'
+import FileViewer from './FileViewer/FileViewer'
 
 type ProgressListType = {
     id: string;
@@ -45,6 +46,8 @@ const Bucket: React.FC<PropsType> = (params) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>("");
     const [searchedItem, setSearchedItem] = useState<Item[]>([]);
+    const [viewerVisible, setViewerVisible] = useState<boolean>(false);
+    const [openType, setOpenType] = useState<string>("");
 
 
     const keypress = useKeyPress(KeyCode.Escape);
@@ -172,6 +175,14 @@ const Bucket: React.FC<PropsType> = (params) => {
         setItems(vFolder.listFiles());
     }
 
+    const onFileSelect = (item: any) => {
+        console.log('onFileSelect');
+        selection.clear()
+        setViewerVisible(true);
+        setOpenType(item.type)
+      
+    }
+
     const onSearchChange = (value: string) => {
         selection.clear();
         setSearchValue(value);        
@@ -257,6 +268,7 @@ const Bucket: React.FC<PropsType> = (params) => {
                 items={searchValue ? searchedItem : items}
                 selection={selection}
                 onFolderSelect={onFolderSelect}
+                onFileSelect={onFileSelect}
                 vFolder={vFolder}
             ></BodyTable>
         )
@@ -296,6 +308,11 @@ const Bucket: React.FC<PropsType> = (params) => {
             >
                 {renderMainLayout()}
             </Spin>
+            <FileViewer
+                visible={viewerVisible}
+                setVisible={setViewerVisible}
+                openType={openType}
+            />
         </div>
     )
 }

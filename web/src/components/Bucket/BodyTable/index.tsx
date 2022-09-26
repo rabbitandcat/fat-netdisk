@@ -5,6 +5,7 @@ import Icon from "../../../components/IconFont";
 import VFolder from "../../../lib/vdir/VFolder";
 import VFile from "../../../lib/vdir/VFile";
 import shortid from 'shortid';
+import { getIconName } from '../../../lib/utils';
 
 const formatSize = (size: number) => {
     const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -20,6 +21,7 @@ const formatSize = (size: number) => {
 type PropTypes = {
     items: Item[],
     onFolderSelect: (name: string) => void,
+    onFileSelect: (item: any) => void,
     vFolder: VFolder,
     selection: any,
 }
@@ -50,7 +52,7 @@ const BodyTable: React.FC<PropTypes> = params => {
                         <Icon
                             type={
                                 item instanceof VFile
-                                    ? "icon-documents"
+                                    ? getIconName(item.type)
                                     : "icon-wenjian"
                             }
                             className="file-icon"
@@ -123,6 +125,9 @@ const BodyTable: React.FC<PropTypes> = params => {
                         onDoubleClick(event: any) {
                             if (record instanceof VFolder && event.target.tagName !== "INPUT") {
                                 params.onFolderSelect(record.name);
+                            }
+                            if (record instanceof VFile && event.target.tagName !== "INPUT") {
+                                params.onFileSelect(record)
                             }
                         },
                     };

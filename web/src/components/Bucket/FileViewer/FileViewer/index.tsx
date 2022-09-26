@@ -1,0 +1,43 @@
+import React from 'react'
+import ImageViewer from '../ImageViewer'
+import PdfViewer from '../PdfViewer'
+import VideoViewer from '../VideoViewer'
+import './index.scss'
+
+
+type PropsType = {
+    visible: boolean
+    setVisible: (visible: boolean) => void
+    openType: string
+}
+
+const FileViewer: React.FC<PropsType> = (params) => {
+
+    const renderViewer = (openType: string) => {
+        switch (openType) {
+            case "image/jpeg":
+                console.log('显示图片');
+                
+                return <ImageViewer
+                    url="https://www.w3schools.com/w3css/img_lights.jpg"
+                />
+            case "application/pdf":
+                return <PdfViewer />
+            case "video/mp4":
+                return <VideoViewer />
+            default:
+                return null
+        }
+    }
+
+    return (
+        <div className="file-viewer" style={{ display: (params.visible ? 'block' : 'none') }}>
+            <div className="close" onClick={() => params.setVisible(false)}>x</div>
+            <div className="container">
+                {renderViewer(params.openType)}
+            </div>
+        </div>
+    )
+}
+
+export default FileViewer
