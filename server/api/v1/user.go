@@ -28,7 +28,6 @@ func GetUserInfo(c *gin.Context) {
 	var maps = make(map[string]interface{})
 	data, code := model.GetUser(id)
 	maps["username"] = data.Username
-	maps["role"] = data.Role
 	c.JSON(
 		http.StatusOK, gin.H{
 			"status":  code,
