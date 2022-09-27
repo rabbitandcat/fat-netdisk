@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
                 if(res.status == 200) {
                     message.success('登录成功')
                     localStorage.setItem('token', res.token)
-                    navigate('/')
+                    navigate('/main')
                 } else {
                     message.error(res.message)
                 }

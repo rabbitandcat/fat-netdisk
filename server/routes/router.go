@@ -19,8 +19,12 @@ func InitRouter() {
 		auth.POST("DownloadFile", v1.DownloadFile)
 		auth.DELETE("DeleteFile", v1.DeleteFile)
 
-		auth.POST("CreateUser", v1.AddUser)
-		auth.POST("Login", v1.Login)
+	}
+	auth1 := r.Group("api/v1")
+	auth1.Use(middleware.Cors())
+	{
+		auth1.POST("CreateUser", v1.AddUser)
+		auth1.POST("Login", v1.Login)
 	}
 
 	_ = r.Run(utils.HttpPort)

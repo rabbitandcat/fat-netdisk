@@ -15,9 +15,10 @@ const http = axios.create({
 // 请求拦截器
 http.interceptors.request.use(function (config: any) {
     // 统一设置用户身份 token
-    // if (userStore.userInfo && userStore.token) {
-    //     config.headers.Authorization = `Bearer ${userStore.token}`
-    // }
+    let token = window.localStorage.getItem('token') || ""
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
     return config
 }, function (error: any) {
     return Promise.reject(error)
