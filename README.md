@@ -43,6 +43,8 @@
 
 ![demo1](./web/src/assets/images/demo.gif)
 
+![demo12](./web/src/assets/images/demo2.gif)
+
 # 🎈License
 
 Fat-NetDisk 使用 [MIT License](https://github.com/rabbitandcat/fat-netdisk/blob/master/LICENSE).

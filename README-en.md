@@ -38,6 +38,8 @@ Fat-NetDisk is a web-based file manager, written mainly in TypeScript and Golang
 
 ![demo1](./web/src/assets/images/demo.gif)
 
+![demo12](./web/src/assets/images/demo2.gif)
+
 # 🎈License
 
 Fat-NetDisk using [MIT License]
