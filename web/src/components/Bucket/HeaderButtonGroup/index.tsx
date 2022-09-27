@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, Space, Input, Breadcrumb, Table, Upload, UploadProps, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { deleteFileList, downloadFileList, uploadFileList, downloadSingleFile } from '../../../api/bucket';
-import FButton from '../../../fat-ui/components/Button';
 import VFolder from '../../../lib/vdir/VFolder'
 
 type PropTypes = {
@@ -41,7 +40,7 @@ const HeaderButtonGroup: React.FC<PropTypes> = params => {
             <Upload {...props}>
                 <Button size="middle"><UploadOutlined />上传文件</Button>
             </Upload>
-            <FButton size="lg" onClick={params.handleDownload}>下载</FButton>
+            <Button size="middle" onClick={params.handleDownload}>下载</Button>
             <Button size="middle" onClick={params.handleDelete}>删除</Button>
         </Space>
     )
