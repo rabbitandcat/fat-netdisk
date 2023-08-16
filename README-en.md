@@ -22,7 +22,8 @@ Fat-NetDisk is a web-based file manager, written mainly in TypeScript and Golang
 * [x] Transfer list progress bar display
 * [x] Quickly search for files in your network drive and display search results
 * [x] Add various formats of file preview functions such as pictures, videos, pdf
-* [x] User module (login registration, jwt authentication, token timing update)
+* [x] User module (login registration, jwt authentication, token timing update)、
+* [x] Preview video of the Sprite chart
 
 # 📌Todo
 
@@ -30,7 +31,6 @@ Fat-NetDisk is a web-based file manager, written mainly in TypeScript and Golang
 * [ ] Multi-file upload and folder download
 * [ ] Slider form of login registration verification method
 * [ ] Batch fast copy files
-* [ ] Preview video of the Sprite chart
 * [ ] Large file size upload
 * [ ] Refactoring to a desktop application with Tauri
 
@@ -39,6 +39,8 @@ Fat-NetDisk is a web-based file manager, written mainly in TypeScript and Golang
 ![demo1](./web/src/assets/images/demo.gif)
 
 ![demo12](./web/src/assets/images/demo2.gif)
+
+![demo3](./web/src/assets/images/demo3.gif)
 
 # 🎈License
 

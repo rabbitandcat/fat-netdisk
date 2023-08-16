@@ -26,6 +26,7 @@
 * [x] 快速搜索网盘内文件并展示搜索结果
 * [x] 增加各种格式的文件预览功能如图片，视频，pdf
 * [x] 用户模块（登录注册、jwt鉴权、token定时更新）
+* [x] 预览视频的雪碧图
 
 
 
@@ -35,7 +36,6 @@
 * [ ] 多文件上传及文件夹下载
 * [ ] 滑块形态的登陆注册验证方式
 * [ ] 批量快速复制文件
-* [ ] 预览视频的雪碧图
 * [ ] 大体积文件上传
 * [ ] 使用 Tauri 重构为桌面端应用
 
@@ -44,6 +44,8 @@
 ![demo1](./web/src/assets/images/demo.gif)
 
 ![demo12](./web/src/assets/images/demo2.gif)
+
+![demo3](./web/src/assets/images/demo3.gif)
 
 # 🎈License
 
