@@ -45,7 +45,7 @@ func GetFileList() ([]interface{}, int) {
 	}
 	bucketManager := storage.NewBucketManager(mac, &cfg)
 
-	bucket := "fat-netdisk"
+	bucket := "fat-netdisk1"
 	limit := 1000
 	prefix := ""
 	delimiter := ""
