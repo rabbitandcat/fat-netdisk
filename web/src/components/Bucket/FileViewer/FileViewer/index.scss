@@ -6,6 +6,7 @@
     position: absolute;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999;
+    overflow: hidden;
     .close {
         font-size: 3rem;
         position: absolute;
@@ -16,6 +17,8 @@
         }
     }
     .container {
+        // border: 1px solid red;
+        overflow: hidden;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -33,11 +36,11 @@
             }
         }
         .video-viewer {
-            max-width: 80vw;
-            max-height: 80vh;
+            max-width: 90vw;
+            max-height: 90vh;
             video {
-                max-width: 80vw;
-                max-height: 80vh;
+                max-width: 70vw;
+                max-height: 70vh;
             }
         }
         .pdf-viewer {

@@ -1,60 +1,30 @@
-/* 设置视频视图容器的样式 */
-.video-viewer-container {
-    /* 设置宽度为100% */
-    width: 100%;
-    /* 设置内边距为10像素 */
-    padding: 10px;
-    height: 100vh;
-    /* 设置背景颜色为浅灰色 */
-    // background-color: #f0f0f0;
-    border: 1px solid red;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.video-viewer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  overflow: hidden;
+  .video-player {
+    overflow: hidden;
+    width: 600px;
+    height: 600px;
+    border: 1px solid green;
   }
-  
-  /* 设置视频元素的样式 */
-  .video-viewer {
-    height: 60vh;
-    width: 100%;
-    z-index: 9999;
+  img {
+    width: 10px;
+    height: 10px;
   }
-
   .thumbnail-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    border: 1px solid yellow;
-  }
-  
-  /* 设置缩略图列表项的样式 */
-  .thumbnail-item {
-    /* 设置宽度为100% */
-    width: 100px;
-    /* 设置高度为自动 */
-    height: auto;
-    /* 设置边框为1像素的实线，颜色为深灰色 */
-    border: 1px solid blue;
-    /* 设置鼠标悬停时的样式 */
-    &:hover {
-      /* 设置背景颜色为浅蓝色 */
-      background-color: #d0d0ff;
-      /* 设置光标为指针 */
-      cursor: pointer;
+    display: flex; 
+    flex-direction: row;
+    border: 1px solid green;
+    .thumbnail-item img {
+      // 设置图片元素的宽度为缩略图的宽度
+      width: 10px;
+      height: 10px;
     }
   }
-  
-  /* 设置缩略图图片元素的样式 */
-  .thumbnail-item img {
-    /* 设置宽度为100% */
-    width: 100%;
-    /* 设置高度为自动 */
-    height: auto;
-  }
-  
+}

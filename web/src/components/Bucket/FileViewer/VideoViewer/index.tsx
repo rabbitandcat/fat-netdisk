@@ -1,70 +1,112 @@
-import React, { useState, useEffect } from "react";
-import VideoThumbnail from "react-video-thumbnail";
-import Slider from "react-slick";
+import React, { useRef, useState, useEffect } from "react";
+import VideoThumbnail from "react-video-thumbnail"; // 使用npm发布的版本
+import Slider from "react-slick"; // 使用npm发布的版本
 
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
+// 定义PropsType接口，包含url属性
 interface PropsType {
   url: string;
 }
 
+// 定义VideoViewer组件，接收PropsType类型的参数
 const VideoViewer: React.FC<PropsType> = (params) => {
-  // 设置一个缩略图数组的状态
+  // 定义一个ref，用于获取video元素的引用
+  const videoRef = useRef<HTMLVideoElement>(null);
+  // 定义一个state，用于存储视频的时长（默认为0）
+  const [duration, setDuration] = useState(0);
+  // 定义一个state，用于存储视频的缩略图数组（默认为空）
   const [thumbnails, setThumbnails] = useState<string[]>([]);
+  // 定义一个变量，用于控制生成缩略图的间隔（默认为10秒）
+  const interval = 10;
 
-  // 设置一个轮播图的配置对象
+  useEffect(() => {
+    console.log('haha', thumbnails)
+  }, [thumbnails])
+
+  // 定义一个函数，用于在视频加载完成后获取视频时长，并生成缩略图数组
+  const handleLoadedMetadata = () => {
+    // 如果videoRef存在，则获取其current属性
+    if (videoRef && videoRef.current) {
+      // 获取视频时长，并向下取整
+      const videoDuration = Math.floor(videoRef.current.duration);
+      // 将视频时长存储到state中
+      setDuration(videoDuration);
+      // 清空缩略图数组
+      setThumbnails([]); // 或者 thumbnails.length = 0;
+      // 定义一个空数组，用于存储缩略图
+      const tempThumbnails: string[] = [];
+      // 遍历视频时长，每隔interval秒生成一个缩略图
+      for (let i = 0; i < videoDuration; i += videoDuration / interval) { 
+        console.log('循环了多少次', i, 'videoDuration', videoDuration, 'interval', interval);
+        // 使用react-video-thumbnail组件生成缩略图，并传入视频url和截取时间
+        tempThumbnails.push(
+          <VideoThumbnail
+            key={i}
+            videoUrl={"http://" + params.url}
+            snapshotAtTime={i}
+            width={100} // 添加了width属性
+            height={60} // 添加了height属性
+            className={"thumbnail"}
+            renderThumbnail={(dataURL: string) => { 
+              return <img src={dataURL} alt="thumbnail" />;
+            }}
+          />
+        );
+      }
+      // 将缩略图数组存储到state中
+      setThumbnails(tempThumbnails);
+    }
+  };
+
+  // 定义一个函数，用于在用户点击缩略图时跳转到对应的视频时间点
+  const handleClickThumbnail = (index: number) => {
+    // 如果videoRef存在，则获取其current属性
+    if (videoRef && videoRef.current) {
+      // 跳转到指定的时间点，并播放视频
+      videoRef.current.currentTime = index * interval;
+      videoRef.current.play();
+    }
+  };
+
+  // 定义一个对象，用于设置react-slick组件的属性
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    dots: false, // 不显示圆点导航
+    infinite: false, // 不循环播放
+    speed: 500, // 切换速度（毫秒）
+    slidesToShow: 10, // 同时显示的幻灯片数量
+    slidesToScroll: 10, // 每次滚动的幻灯片数量
+    centerMode: false, // 添加了centerMode属性
+    centerPadding: "0px", // 添加了centerPadding属性,
+    vertical: false, // 添加了vertical属性
+    // width: 100, // 添加了width属性
+    // height: 60, // 添加了height属性
   };
 
-  // 定义一个生成缩略图的函数，接收一个时间参数
-  const generateThumbnail = (time: number) => {
-    return (
-      <VideoThumbnail
-        key={time}
-        videoUrl={"http://" + params.url}
-        cors={true} // 设置CORS为true
-        snapshotAtTime={time} // 设置截取时间
-        thumbnailHandler={(thumbnail) => {
-          // 设置缩略图处理函数，将生成的base64数据添加到数组中
-          setThumbnails((prev) => [...prev, thumbnail]);
-        }}
-        width={200} // 设置缩略图宽度
-        height={150} // 设置缩略图高度
-      />
-    );
-  };
-
-  // 定义一个渲染轮播图的函数，接收一个缩略图数组参数
-  const renderSlider = (thumbnails: string[]) => {
-    return (
-      <Slider {...settings}>
+  return (
+    <div className="video-viewer">
+      {/* 显示视频元素，并传入url和ref属性，以及加载完成后的回调函数 */}
+      <video
+        src={"http://" + params.url}
+        ref={videoRef}
+        controls
+        onLoadedMetadata={handleLoadedMetadata}
+        className="video-player"
+        preload="auto" // 设置预加载行为为自动
+        autoPlay={true}
+      >
+        您的浏览器不支持 video 标签。
+      </video>
+      {/* 显示缩略图元素，并使用react-slick组件实现滑动效果 */}
+      <Slider {...settings} className="thumbnail-list">
         {thumbnails.map((thumbnail, index) => (
-          <div key={index}>
-            <img src={thumbnail} alt={`thumbnail-${index}`} /> // 使用img标签显示base64数据
+          // 给每个缩略图添加一个点击事件，传入索引值作为参数
+          <div key={index} onClick={() => handleClickThumbnail(index)} className="thumbnail-item">
+            {thumbnail}
           </div>
         ))}
       </Slider>
-    );
-  };  
-
-  // 使用useEffect在组件挂载时生成一些缩略图，你可以自己修改时间间隔和数量
-  useEffect(() => {
-    generateThumbnail(0); // 第0秒
-    generateThumbnail(5); // 第5秒
-    generateThumbnail(10); // 第10秒
-    generateThumbnail(15); // 第15秒
-    generateThumbnail(20); // 第20秒
-  }, []);
-
-  return (
-    <div>
-      <video src={"http://" + params.url} controls className="video-viewer" crossOrigin="anonymous">
-        您的浏览器不支持 video 标签。
-      </video>
-      {thumbnails.length > 0 && renderSlider(thumbnails)} // 如果缩略图数组不为空，就渲染轮播图
     </div>
   );
 };
